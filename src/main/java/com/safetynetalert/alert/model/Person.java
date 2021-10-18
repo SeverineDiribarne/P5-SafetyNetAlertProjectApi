@@ -1,5 +1,13 @@
 package com.safetynetalert.alert.model;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties({"age"})
 public class Person {
 	
 	//Attributes 
@@ -10,7 +18,6 @@ public class Person {
 	private String phone;
 	private String email;
 	private String birthDate;
-	private long age;
 	private MedicalRecord medicalRecord;
 
 
@@ -18,16 +25,9 @@ public class Person {
 	 * getter age
 	 * @return this age
 	 */
+	@JsonProperty("age")
 	public long getAge() {
-		return this.age;
-	}
-
-	/**
-	 * Setter age
-	 * @param age
-	 */
-	public void setAge(long age) {
-		this.age = age;
+		return ageCalculation();
 	}
 
 	/**
@@ -159,15 +159,25 @@ public class Person {
 	}
 
 	/**
+	 * Age Calculation method
+	 * @return age
+	 */
+	public long ageCalculation() {
+		LocalDate actualDate = LocalDate.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/d/yyyy");
+		String birthday = getBirthDate();
+		LocalDate birthdayDate = LocalDate.parse(birthday, formatter);
+		return ChronoUnit.YEARS.between(birthdayDate, actualDate);
+	}
+	
+	/**
 	 * ToString method
 	 */
 	public String toString() {
 		return "  Id : " + getId() + 
 				"  FirstName : " + getFirstName() + 
 				"  LastName : " + getLastName() + 
-				"  Address : " + getAddress().getStreet() + 
-				"  City : " + getAddress().getCity() + 
-				"  Zip Code : " + getAddress().getZip() + 
+				"  Address : " + getAddress().toString() +
 				"  BirthDate : " + getBirthDate() + 
 				"  Email : " + getEmail() + 
 				"  Phone : " + getPhone();
