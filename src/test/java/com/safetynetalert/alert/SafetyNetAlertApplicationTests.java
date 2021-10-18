@@ -1,4 +1,4 @@
-package com.safetyNetAlert.Alert;
+package com.safetynetalert.alert;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

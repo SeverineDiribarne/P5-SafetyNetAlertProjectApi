@@ -1,4 +1,4 @@
-package com.safetynetalert.alert.api;
+package com.safetynetalert;
 
 import com.safetynetalert.alert.repository.RecoveryOfJsonDataInJavaObject;
 import java.io.IOException;
@@ -8,9 +8,11 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
 @SpringBootApplication
 public class ApiSafetyNetAlertApplication extends SpringBootServletInitializer {
-  public static void main(String[] args) throws IOException {
-    RecoveryOfJsonDataInJavaObject repository = RecoveryOfJsonDataInJavaObject.getInstance();
-    SpringApplication.run(ApiSafetyNetAlertApplication.class, args);
-    repository.initialize();
-  }
+
+	// Entry point
+	public static void main(String[] args) throws IOException {
+		RecoveryOfJsonDataInJavaObject repository = RecoveryOfJsonDataInJavaObject.getInstance();
+		SpringApplication.run(ApiSafetyNetAlertApplication.class, args);
+		repository.initialize();
+	}
 }
