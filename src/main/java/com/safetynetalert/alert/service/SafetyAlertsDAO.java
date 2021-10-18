@@ -20,8 +20,8 @@ public class SafetyAlertsDAO {
 	}
 	
 	/**
-	 * get firestations
-	 * @return firestation list
+	 * get fireStations
+	 * @return fireStation list
 	 */
 	public List<FireStation> getFireStations() {
 		return RecoveryOfJsonDataInJavaObject.getInstance().getFirestations();
@@ -81,13 +81,29 @@ public class SafetyAlertsDAO {
 	 * @param firestationId
 	 * @param address
 	 */
-	public void updateFirestationNumber(Integer firestationId, String address) {
-		 RecoveryOfJsonDataInJavaObject.getInstance().updateFirestationNumber(firestationId, address);
+	public void updateFirestationNumber(Integer oldFirestationId,Integer newfirestationId, String address) {
+		 RecoveryOfJsonDataInJavaObject.getInstance().updateFirestationNumber(oldFirestationId, newfirestationId, address);
 	}
-	
-	public void deleteMapping(Integer firestationId, String address) {
-		 RecoveryOfJsonDataInJavaObject.getInstance().deleteMapping(firestationId, address);		
+	/**
+	 * Delete mapping by firestationId
+	 * @param firestationId
+	 */
+	public void deleteMappingByFirestationId(Integer firestationId ) {
+		//Delete the mapping by fireStationId
+		if(firestationId != null) {
+		 RecoveryOfJsonDataInJavaObject.getInstance().deleteMappingByFirestationId(firestationId);	
+		}
 	}
+	/**
+	 *  Delete mapping by address
+	 * @param address
+	 */
+		public void deleteMappingByAddress(String address) {
+			//Delete the mapping by address
+			if(address != null) {
+				 RecoveryOfJsonDataInJavaObject.getInstance().deleteMappingByAddress(address);	
+			}	
+		}
 	
 	//-------------------------------------/medicalRecord--------------------------------------------------------------
 	
@@ -96,8 +112,8 @@ public class SafetyAlertsDAO {
 	 * @param medicalRecord
 	 * @return medicalRecord added
 	 */
-	public MedicalRecord addMedicalRecord(MedicalRecord medicalRecord) {
-		return RecoveryOfJsonDataInJavaObject.getInstance().addMedicalRecord(medicalRecord);
+	public void addMedicalRecord(int personId, MedicalRecord medicalRecord) {
+		RecoveryOfJsonDataInJavaObject.getInstance().addMedicalRecord(personId, medicalRecord );
 	}
 
 	/**

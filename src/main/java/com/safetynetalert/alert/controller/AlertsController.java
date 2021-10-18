@@ -1,8 +1,5 @@
 package com.safetynetalert.alert.controller;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.safetynetalert.alert.model.FireStation;
 import com.safetynetalert.alert.model.MedicalRecord;
 import com.safetynetalert.alert.model.Person;
 import com.safetynetalert.alert.model.PersonsByStationId;
@@ -28,19 +24,6 @@ public class AlertsController {
 	private SafetyAlertsDAO safetyAlertsDao;
 
 	/**
-	 * GetAge method
-	 * @param person
-	 * @return age
-	 */
-	private long getAge(Person person) {
-		LocalDate actualDate = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/d/yyyy");
-		String birthday = person.getBirthDate();
-		LocalDate birthdayDate = LocalDate.parse(birthday, formatter);
-		return ChronoUnit.YEARS.between(birthdayDate, actualDate);
-	}
-
-	/**
 	 * Get persons list covered by the firestation
 	 * @param stationNumber
 	 * @return persons list with lastname, firstname, address, phone number,
@@ -51,10 +34,9 @@ public class AlertsController {
 		List<Person> result = new ArrayList<>();
 		int numberOfAdults = 0;
 		int numberOfChild = 0;
-		for (Person person : this.safetyAlertsDao.getPersons()) {
-			if (person.getAddress().getFireStationIds().contains(stationNumber)) {
-				long age = getAge(person);
-				person.setAge(age);
+		for (Person person : safetyAlertsDao.getPersons()) {
+			if (person.getAddress().containsFirestationId(stationNumber)) {
+				long age = person.ageCalculation();
 				result.add(person);
 				if (age > 18) {
 					numberOfAdults++;
@@ -73,15 +55,14 @@ public class AlertsController {
 	/**
 	 * Get the list of children living at the address
 	 * @param address
-	 * @return children list with firstname, lastname, age and other members of family 
+	 * @return children list with firstName, lastName, age and other members of family 
 	 * or empty list if no children at the requested address
 	 */
 	@GetMapping({"/childAlert"})
 	public List<Person> getTheListOfChildrenLivingAtTheAddress(@RequestParam String address) {
 		List<Person> result = new ArrayList<>();
 		for (Person person : this.safetyAlertsDao.getPersons()) {
-			long age = getAge(person);
-			person.setAge(age);
+			long age = person.ageCalculation();
 			if (person.getAddress().getStreet().contains(address) && (age <= 18) ) {
 				result.add(person);  
 			}
@@ -90,25 +71,25 @@ public class AlertsController {
 	}
 
 	/**
-	 * Get the phone number list of people covered by the firestation
+	 * Get the phone number list of people covered by the fireStation
 	 * @param firestation
-	 * @return list of phone number from everyone covered by the firestation
+	 * @return list of phone number from everyone covered by the fireStation
 	 */
 	@GetMapping({"/phoneAlert"})
 	public List<String> getThePhoneNumberListOfPeopleCoveredByTheFireStation
 	(@RequestParam Integer firestation) {
 		List<String> result = new ArrayList<>();
 		for (Person person : this.safetyAlertsDao.getPersons()) {
-			if (person.getAddress().getFireStationIds().contains(firestation))
+			if (person.getAddress().containsFirestationId(firestation))
 				result.add(person.getPhone()); 
 		} 
 		return result;
 	}
 
 	/**
-	 * Get the list of people living at the address as well as the firestation serving it
+	 * Get the list of people living at the address as well as the fireStation serving it
 	 * @param address
-	 * @return list of people living at the address as well as the firestation serving it
+	 * @return list of people living at the address as well as the fireStation serving it
 	 */
 	@GetMapping({"/fire"})
 	public List<Person> getTheListOfPeopleLivingAtTheAddressAsWellAsTheFirestationServingIt
@@ -122,16 +103,17 @@ public class AlertsController {
 	}
 
 	/**
-	 * Get the list of homes served by the Firestation
+	 * Get the list of homes served by the fireStation
 	 * @param stations
-	 * @return list of homes served by the firestation
+	 * @return list of homes served by the fireStation
 	 */
 	@GetMapping({"/flood/stations"})
 	public List<Person> getTheListOfHomesServedByTheFirestation(@RequestParam List<Integer> stations) {
 		List<Person> result = new ArrayList<>();
 		for (Person person : this.safetyAlertsDao.getPersons()) {
-			if (person.getAddress().getFireStationIds().equals(stations))
+			if (person.getAddress().equalsFirestationId(stations)) {
 				result.add(person); 
+			}
 		} 
 		return result;
 	}
@@ -155,7 +137,7 @@ public class AlertsController {
 	/**
 	 * Get the email list of all the inhabitants of the city
 	 * @param city
-	 * @return list of emails from everyone in town
+	 * @return list of Email from everyone in town
 	 */
 	@GetMapping({"/communityEmail"})
 	public List<String> getTheEmailListOfAllTheInhabitantsOfTheCity(@RequestParam String city) {
@@ -166,7 +148,7 @@ public class AlertsController {
 	}
 
 	//-------------------------------------"/person"------------------------------------------
-	
+
 	/**
 	 * Create a new person
 	 * @param person
@@ -184,7 +166,7 @@ public class AlertsController {
 	@PutMapping("/person")
 	public void updatePerson(@RequestParam("firstName") String firstName, 
 			@RequestParam("lastName") String lastName, @RequestBody Person person) {
-			safetyAlertsDao.updatePerson(firstName, lastName, person);
+		safetyAlertsDao.updatePerson(firstName, lastName, person);
 	}
 
 	/**
@@ -196,9 +178,9 @@ public class AlertsController {
 			@RequestParam("lastName") String lastName) {
 		safetyAlertsDao.deletePerson(firstName, lastName);
 	}
-	
+
 	//------------------------------------"/firestation"----------------------------------------
-	
+
 	/**
 	 * Add a mapping FireStation/address
 	 * @param firestationId
@@ -208,35 +190,44 @@ public class AlertsController {
 	public void addAMappingFireStationIdWithAnAddress(@RequestParam Integer firestationId, @RequestParam String address ) {
 		safetyAlertsDao.addMapping(firestationId, address);
 	}
-	
+
 	/**
 	 * Update the fireStation number based on an address
 	 * @param firestation
 	 */
 	@PutMapping("/firestation")
-	public void updateTheFireStationNumberBasedOnAnAddress(@RequestParam Integer firestationId, @RequestParam String address) {
-		safetyAlertsDao.updateFirestationNumber(firestationId, address);
-		
+	public void updateTheFireStationNumberBasedOnAnAddress(@RequestParam Integer oldFirestationId, @RequestParam Integer newFirestationId, @RequestParam String address) {
+		safetyAlertsDao.updateFirestationNumber(oldFirestationId, newFirestationId, address);
+
 	}
-	
+
 	/**
-	 * Delete the mapping of a fireStation or an address
+	 * Delete the mapping by fireStationId or by address
+	 * @param firestationId
+	 * @param address
 	 */
 	@DeleteMapping("/firestation")
-	public void deleteTheMappingOfAFireStationOrAnAddress(@RequestParam Integer firestationId, @RequestParam String address) {
-		safetyAlertsDao.deleteMapping(firestationId, address);
+	public void deleteTheMappingByFirestationIdOrByAddress(@RequestParam(required = false) Integer firestationId, @RequestParam(required = false) String address) {
+		//Delete the mapping by fireStationId
+		if(firestationId != null) {
+			safetyAlertsDao.deleteMappingByFirestationId(firestationId);
+		}
+		//Delete the mapping by address
+		if(address != null) {
+			safetyAlertsDao.deleteMappingByAddress(address);
+		}
 	}
-	
+
 	//---------------------------------"/medicalRecord"---------------------------------------
-	
+
 	/**
 	 * Add a medicalRecord
 	 * @param medicalRecord
 	 * @return medicalRecord
 	 */
 	@PostMapping("/medicalRecord")
-	public MedicalRecord addAMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
-		return safetyAlertsDao.addMedicalRecord(medicalRecord);
+	public void addAMedicalRecord(@RequestParam int personId,@RequestBody MedicalRecord medicalRecord ) {
+		 safetyAlertsDao.addMedicalRecord(personId, medicalRecord );
 	}
 	/**
 	 * Update an existing MedicalRecord of a specific person 
@@ -249,7 +240,7 @@ public class AlertsController {
 			@RequestParam("lastName") String lastName,@RequestBody Person person) {
 		safetyAlertsDao.updateMedicalRecord(firstName, lastName, person);
 	}
-	
+
 	/**
 	 * delete a person's medical record
 	 * @param firstName

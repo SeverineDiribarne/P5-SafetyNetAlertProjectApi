@@ -13,8 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
 import org.springframework.util.ResourceUtils;
 
 public class RecoveryOfJsonDataInJavaObject {
@@ -33,7 +33,6 @@ public class RecoveryOfJsonDataInJavaObject {
 	private ArrayList<Person> persons = new ArrayList<>();
 	private ArrayList<FireStation> firestations = new ArrayList<>();
 	private ArrayList<MedicalRecord> medicalrecords = new ArrayList<>();
-	private HashMap<Integer, String> mappingFirestationIdWithAnAddress = new HashMap<Integer, String>();
 
 
 	/**
@@ -45,7 +44,7 @@ public class RecoveryOfJsonDataInJavaObject {
 	}
 
 	/**
-	 * Getter Firestations
+	 * Getter firestations
 	 * @return firestations
 	 */
 	public List<FireStation> getFirestations() {
@@ -72,14 +71,14 @@ public class RecoveryOfJsonDataInJavaObject {
 
 		fillModelWithJsonDataObjects(jsonDataInJavaObject.getPersons(), jsonDataInJavaObject.getFirestations(), jsonDataInJavaObject.getMedicalrecords());
 	}
-
+ 
 	/**
 	 * Fill model with Json Data Object
 	 * @param personsEntities
 	 * @param fireStationsEntities
 	 * @param medicalrecordsEntities
 	 */
-	public void fillModelWithJsonDataObjects(List<PersonsEntity> personsEntities, List<FirestationsEntity> fireStationsEntities, List<MedicalRecordsEntity> medicalrecordsEntities) {
+	private void fillModelWithJsonDataObjects(List<PersonsEntity> personsEntities, List<FirestationsEntity> fireStationsEntities, List<MedicalRecordsEntity> medicalrecordsEntities) {
 		for (FirestationsEntity fireStationEntity : fireStationsEntities) {
 			FireStation fireStation = new FireStation();
 			fireStation.setStationId(Integer.parseInt(fireStationEntity.getStation()));
@@ -98,25 +97,28 @@ public class RecoveryOfJsonDataInJavaObject {
 			address.setZip(personEntity.getZip());
 			person.setAddress(address);
 			address.setFireStationIds(new ArrayList<>());
+
 			for (FirestationsEntity fireStationEntity : fireStationsEntities) {
 				if (person.getAddress().getStreet().equals(fireStationEntity.getAddress())) {
-					address.getFireStationIds().add(Integer.valueOf(Integer.parseInt(fireStationEntity.getStation()))); 
+					address.addFirestationId(Integer.valueOf(Integer.parseInt(fireStationEntity.getStation()))); 
 				}
 			} 
 			person.setId(id++);
 			persons.add(person);
 		} 
 		for (MedicalRecordsEntity medicalRecordEntity : medicalrecordsEntities) {
+			MedicalRecord medicalRecord = new MedicalRecord();
 			Person person = getPersonByFirstNameAndLastName(medicalRecordEntity.getFirstName(), medicalRecordEntity.getLastName());
 			if (person != null) {
 				person.setBirthDate(medicalRecordEntity.getBirthdate());
-				MedicalRecord medicalRecord = new MedicalRecord();
 				medicalRecord.setMedication(medicalRecordEntity.getMedications());
 				medicalRecord.setAllergies(medicalRecordEntity.getAllergies());
 				person.setMedicalRecord(medicalRecord);
 			} 
-		} 
+			this.medicalrecords.add(medicalRecord);
+		}	
 	}
+
 	/**
 	 * Get person by firstname and lastname
 	 * @param firstName
@@ -131,8 +133,39 @@ public class RecoveryOfJsonDataInJavaObject {
 		}
 		return null;
 	}
+
+	/**
+	 * Get person by address
+	 * @param address
+	 * @return
+	 */
+	private List<Person> getPersonByAddress(String address) {
+		List<Person> personsFound = new ArrayList<>();
+			for (Person person : persons) {
+				if (person.getAddress().getStreet().equals(address)) {
+					personsFound.add(person);
+				}
+			}
+		return personsFound;
+	}
+
+	/**
+	 * get person by firestationId
+	 * @param firestationId
+	 * @return
+	 */
+	private List<Person> getPersonByFirestationId(Integer firestationId) {
+		List<Person> personsFound = new ArrayList<>();
+		for (Person person : persons) {
+			if(person.getAddress().containsFirestationId(firestationId)) {
+				personsFound.add(person);
+			}
+		}
+		return personsFound;
+	}
+
 	//--------------------------------------------/person---------------------------------------------------------------
-	
+
 	/**
 	 * Add a new person 
 	 * @param person
@@ -141,8 +174,8 @@ public class RecoveryOfJsonDataInJavaObject {
 	public Person addPerson(Person person) {
 		persons.add(person);
 		return person;
-
 	}
+	
 	/**
 	 * Update a person
 	 * @param person
@@ -154,15 +187,27 @@ public class RecoveryOfJsonDataInJavaObject {
 
 		if(personFound != null) {
 
-			personFound.setAddress(person.getAddress());
-			personFound.setBirthDate(person.getBirthDate());
-			personFound.setAge(person.getAge());
-			personFound.setPhone(person.getPhone());
-			personFound.setEmail(person.getEmail());
-			personFound.setId(person.getId());
-			personFound.setMedicalRecord(person.getMedicalRecord());
+			if(!(person.getAddress().getStreet().isEmpty())) {
+				personFound.getAddress().setStreet(person.getAddress().getStreet());
+			}
+			if(!(person.getBirthDate().isEmpty())) {
+				personFound.setBirthDate(person.getBirthDate());	
+			}
+			if(!(person.getEmail().isEmpty())) {
+				personFound.setEmail(person.getEmail());
+			}
+			if(!(person.getMedicalRecord().getMedication().isEmpty())) {
+				personFound.getMedicalRecord().setMedication(person.getMedicalRecord().getMedication());
+			}
+			if(!(person.getMedicalRecord().getAllergies().isEmpty())) {
+				personFound.getMedicalRecord().setAllergies(person.getMedicalRecord().getAllergies());
+			}
+			if(!(person.getPhone().isEmpty())) {
+				personFound.setPhone(person.getPhone());
+			}
 		}
 	}
+	
 	/**
 	 * Delete a person
 	 * @param firstName
@@ -174,71 +219,116 @@ public class RecoveryOfJsonDataInJavaObject {
 			persons.remove(personFound);
 		}
 	}
-	
-    //-----------------------------------------/firestation-------------------------------------------------------------
-	
+
+	//-----------------------------------------/firestation-------------------------------------------------------------
+
 	/**
 	 * Add a mapping FireStation/address
 	 * @param firestationId
 	 * @param address
 	 */
 	public void addMapping(Integer firestationId, String address) {
-		mappingFirestationIdWithAnAddress.put(firestationId,address);
+
+		List<Person> personsFound = getPersonByAddress(address);
+		for(Person person : personsFound) {
+			person.getAddress().addFirestationId(firestationId);
+		}
 	}
-	
+
 	/**
-	 * Update the fireStation number based on an address
+	 * Update the Firestation Number based on an address
 	 * @param firestationId
 	 * @param address
 	 */
-	public void updateFirestationNumber(Integer firestationId, String address) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void deleteMapping(Integer firestationId, String address) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	//----------------------------------------/medicalRecord------------------------------------------------------------
-	
-	/**
-	 * Add a medical record
-	 * @param medicalRecord
-	 * @return medicalRecord
-	 */
-	public MedicalRecord addMedicalRecord(MedicalRecord medicalRecord) {
-		medicalrecords.add(medicalRecord);
-		return medicalRecord;
-	}
-
-	/**
-	 * Update medical record of a specific person
-	 * @param firstName
-	 * @param lastName
-	 * @param person
-	 */
-	public void updateMedicalRecord(String firstName, String lastName, Person person) {
-
-		Person personFound = getPersonByFirstNameAndLastName(firstName, lastName);
-
-		if(personFound != null) {
-			personFound.setMedicalRecord(person.getMedicalRecord());
+	public void updateFirestationNumber(Integer oldfirestationId, Integer newfirestationId, String address) {
+		List<Person> personsFound = getPersonByAddress(address);
+		for(Person person : personsFound) {
+			person.getAddress().updateFirestationId(oldfirestationId, newfirestationId);
 		}
 	}
 
 	/**
-	 * delete a person's medical record
-	 * @param firstName
-	 * @param lastName
+	 * Delete mapping by FirestationId
+	 * @param firestationId
+	 * @param address
 	 */
-	public void deleteMedicalRecord(String firstName, String lastName) {
-		
-		Person personFound = getPersonByFirstNameAndLastName(firstName, lastName);
-
-		if(personFound != null) {
-			personFound.setMedicalRecord(null);
+	public void deleteMappingByFirestationId(Integer firestationId) {
+		//Delete the mapping by fireStationId
+		if(firestationId != null) {
+			List<Person> personsFound = getPersonByFirestationId(firestationId);
+			for(Person person : personsFound) {
+				person.getAddress().removeFirestationId(firestationId);
+			}
 		}
 	}
-}
+	
+	/**
+	 * Delete the mapping by address
+	 * @param address
+	 */
+		public void deleteMappingByAddress(String address) {
+			//Delete the mapping by address
+			if(address != null) {
+				List<Person> personsFound=getPersonByAddress(address);
+				for(Person person : personsFound) {
+					person.getAddress().removeAllFirestationIds();
+				}
+			}	
+		}
+
+		//----------------------------------------/medicalRecord------------------------------------------------------------
+
+		/**
+		 * Add a medical record
+		 * @param personId
+		 * @param medicalRecord
+		 */
+		public void addMedicalRecord(int personId,MedicalRecord medicalRecord ) {
+			Person personFound = getPersonById(personId);
+			if(personFound !=null) {
+				personFound.setMedicalRecord(medicalRecord);
+			}
+		}
+		/**
+		 * Get person by Id
+		 * @param personId
+		 * @return
+		 */
+		private Person getPersonById(int personId) {
+			for (Person person : persons) {
+				if (person.getId()==(personId)) {
+					return person;
+				}
+			}
+			return null;
+		}
+
+		/**
+		 * Update medical record of a specific person
+		 * @param firstName
+		 * @param lastName
+		 * @param person
+		 */
+		public void updateMedicalRecord(String firstName, String lastName, Person person) {
+
+			Person personFound = getPersonByFirstNameAndLastName(firstName, lastName);
+
+			if(personFound != null) {
+				personFound.setMedicalRecord(person.getMedicalRecord());
+			}
+		}
+
+		/**
+		 * delete a person's medical record
+		 * @param firstName
+		 * @param lastName
+		 */
+		public void deleteMedicalRecord(String firstName, String lastName) {
+
+			Person personFound = getPersonByFirstNameAndLastName(firstName, lastName);
+
+			if(personFound != null) {
+				personFound.setMedicalRecord(null);
+			}
+		}
+	}
