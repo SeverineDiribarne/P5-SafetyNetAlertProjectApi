@@ -6,33 +6,57 @@ import com.safetynetalert.alert.repository.entities.PersonsEntity;
 import java.util.List;
 
 public class DescriptionOfUncleanJavaObjects {
-  private List<PersonsEntity> persons;
-  
-  private List<FirestationsEntity> firestations;
-  
-  private List<MedicalRecordsEntity> medicalrecords;
-  
-  public List<PersonsEntity> getPersons() {
-    return this.persons;
-  }
-  
-  public void setPersonsEntities(List<PersonsEntity> persons) {
-    this.persons = persons;
-  }
-  
-  public List<FirestationsEntity> getFirestations() {
-    return this.firestations;
-  }
-  
-  public void setFireStationsEntities(List<FirestationsEntity> firestations) {
-    this.firestations = firestations;
-  }
-  
-  public List<MedicalRecordsEntity> getMedicalrecords() {
-    return this.medicalrecords;
-  }
-  
-  public void setMedicalrecordsEntities(List<MedicalRecordsEntity> medicalrecords) {
-    this.medicalrecords = medicalrecords;
-  }
+	
+	//Attributes
+	private List<PersonsEntity> persons;
+	private List<FirestationsEntity> firestations;
+	private List<MedicalRecordsEntity> medicalrecords;
+
+	/**
+	 * getter persons entity
+	 * @return this persons
+	 */
+	public List<PersonsEntity> getPersons() {
+		return this.persons;
+	}
+
+	/**
+	 * setter persons entity
+	 * @param persons
+	 */
+	public void setPersonsEntities(List<PersonsEntity> persons) {
+		this.persons = persons;
+	}
+
+	/**
+	 * getter firestations entity 
+	 * @return this firestations
+	 */
+	public List<FirestationsEntity> getFirestations() {
+		return this.firestations;
+	}
+
+	/**
+	 * Setter firestations entity
+	 * @param firestations
+	 */
+	public void setFireStationsEntities(List<FirestationsEntity> firestations) {
+		this.firestations = firestations;
+	}
+
+	/**
+	 * getter medicalrecords entity
+	 * @return this medicalrecords
+	 */
+	public List<MedicalRecordsEntity> getMedicalrecords() {
+		return this.medicalrecords;
+	}
+
+	/**
+	 * setter medicalrecords entity
+	 * @param medicalrecords
+	 */
+	public void setMedicalrecordsEntities(List<MedicalRecordsEntity> medicalrecords) {
+		this.medicalrecords = medicalrecords;
+	}
 }
