@@ -42,8 +42,8 @@ public class SafetyAlertsDAO {
 	 * @param person
 	 * @return person added
 	 */
-	public Person addPersons(Person person) {
-		return RecoveryOfJsonDataInJavaObject.getInstance().addPerson(person);
+	public void addPersons(Person person) {
+		 RecoveryOfJsonDataInJavaObject.getInstance().addPerson(person);
 	}
 
 	/**
