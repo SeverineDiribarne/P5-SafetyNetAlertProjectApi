@@ -14,7 +14,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 
+=======
+<<<<<<< Updated upstream
+=======
+
+import org.apache.commons.collections.CollectionUtils;
+>>>>>>> Stashed changes
+>>>>>>> feature/Tests
 import org.springframework.util.ResourceUtils;
 
 public class RecoveryOfJsonDataInJavaObject {
@@ -64,7 +72,11 @@ public class RecoveryOfJsonDataInJavaObject {
 	 * @throws IOException
 	 */
 	public void initialize() throws IOException {
-
+		
+		this.persons.clear();
+		this.firestations.clear();
+		this.medicalrecords.clear();
+		
 		File file = ResourceUtils.getFile("classpath:data.json");
 		String content = Files.readString(file.toPath());
 		DescriptionOfUncleanJavaObjects jsonDataInJavaObject = JsonIterator.deserialize(content, DescriptionOfUncleanJavaObjects.class);
@@ -78,13 +90,25 @@ public class RecoveryOfJsonDataInJavaObject {
 	 * @param fireStationsEntities
 	 * @param medicalrecordsEntities
 	 */
+<<<<<<< HEAD
 	private void fillModelWithJsonDataObjects(List<PersonsEntity> personsEntities, List<FirestationsEntity> fireStationsEntities, List<MedicalRecordsEntity> medicalrecordsEntities) {
+=======
+<<<<<<< Updated upstream
+	public void fillModelWithJsonDataObjects(List<PersonsEntity> personsEntities, List<FirestationsEntity> fireStationsEntities, List<MedicalRecordsEntity> medicalrecordsEntities) {
+=======
+	private void fillModelWithJsonDataObjects(List<PersonsEntity> personsEntities, List<FirestationsEntity> fireStationsEntities, List<MedicalRecordsEntity> medicalrecordsEntities) {
+
+		//fireStationsEntities
+>>>>>>> Stashed changes
+>>>>>>> feature/Tests
 		for (FirestationsEntity fireStationEntity : fireStationsEntities) {
 			FireStation fireStation = new FireStation();
 			fireStation.setStationId(Integer.parseInt(fireStationEntity.getStation()));
 			this.firestations.add(fireStation);
 		} 
 		int id = 0;
+
+		//personsEntities
 		for (PersonsEntity personEntity : personsEntities) {
 			Person person = new Person();
 			Address address = new Address();
@@ -106,6 +130,8 @@ public class RecoveryOfJsonDataInJavaObject {
 			person.setId(id++);
 			persons.add(person);
 		} 
+
+		//medicalrecordsEntities
 		for (MedicalRecordsEntity medicalRecordEntity : medicalrecordsEntities) {
 			MedicalRecord medicalRecord = new MedicalRecord();
 			Person person = getPersonByFirstNameAndLastName(medicalRecordEntity.getFirstName(), medicalRecordEntity.getLastName());
@@ -133,6 +159,11 @@ public class RecoveryOfJsonDataInJavaObject {
 		}
 		return null;
 	}
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> feature/Tests
 
 	/**
 	 * Get person by address
@@ -141,11 +172,19 @@ public class RecoveryOfJsonDataInJavaObject {
 	 */
 	private List<Person> getPersonByAddress(String address) {
 		List<Person> personsFound = new ArrayList<>();
+<<<<<<< HEAD
 			for (Person person : persons) {
 				if (person.getAddress().getStreet().equals(address)) {
 					personsFound.add(person);
 				}
 			}
+=======
+		for (Person person : persons) {
+			if (person.getAddress().getStreet().equals(address)) {
+				personsFound.add(person);
+			}
+		}
+>>>>>>> feature/Tests
 		return personsFound;
 	}
 
@@ -164,6 +203,10 @@ public class RecoveryOfJsonDataInJavaObject {
 		return personsFound;
 	}
 
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> feature/Tests
 	//--------------------------------------------/person---------------------------------------------------------------
 
 	/**
@@ -171,11 +214,19 @@ public class RecoveryOfJsonDataInJavaObject {
 	 * @param person
 	 * @return person
 	 */
-	public Person addPerson(Person person) {
+	public void addPerson(Person person) {
 		persons.add(person);
+<<<<<<< Updated upstream
 		return person;
 	}
+<<<<<<< HEAD
 	
+=======
+=======
+	}
+
+>>>>>>> Stashed changes
+>>>>>>> feature/Tests
 	/**
 	 * Update a person
 	 * @param person
@@ -187,6 +238,7 @@ public class RecoveryOfJsonDataInJavaObject {
 
 		if(personFound != null) {
 
+<<<<<<< HEAD
 			if(!(person.getAddress().getStreet().isEmpty())) {
 				personFound.getAddress().setStreet(person.getAddress().getStreet());
 			}
@@ -208,6 +260,54 @@ public class RecoveryOfJsonDataInJavaObject {
 		}
 	}
 	
+=======
+<<<<<<< Updated upstream
+			personFound.setAddress(person.getAddress());
+			personFound.setBirthDate(person.getBirthDate());
+			personFound.setAge(person.getAge());
+			personFound.setPhone(person.getPhone());
+			personFound.setEmail(person.getEmail());
+			personFound.setId(person.getId());
+			personFound.setMedicalRecord(person.getMedicalRecord());
+		}
+	}
+=======
+			if(person.getAddress()!=null) {
+				if((person.getAddress().getStreet()!= null) && !(person.getAddress().getStreet().isEmpty())) {
+					personFound.getAddress().setStreet(person.getAddress().getStreet());
+				}
+				if((person.getAddress().getCity()!= null) && !(person.getAddress().getCity().isEmpty())) {
+					personFound.getAddress().setCity(person.getAddress().getCity());
+				}
+				if((person.getAddress().getZip()!= null) && !(person.getAddress().getZip().isEmpty())) {
+					personFound.getAddress().setZip(person.getAddress().getZip());
+				}
+				if((person.getAddress().getFireStationIds()!=null)&& CollectionUtils.isNotEmpty(person.getAddress().getFireStationIds())) {
+					personFound.getAddress().setFireStationIds(person.getAddress().getFireStationIds());
+				}
+			}
+			if((person.getBirthDate()!= null) && !(person.getBirthDate().isEmpty())) {
+				personFound.setBirthDate(person.getBirthDate());	
+			}
+			if((person.getEmail()!=null) && !(person.getEmail().isEmpty())) {
+				personFound.setEmail(person.getEmail());
+			}
+			if(person.getMedicalRecord()!=null) {
+				if((person.getMedicalRecord().getMedication() != null ) && CollectionUtils.isNotEmpty(person.getMedicalRecord().getMedication())) {
+					personFound.getMedicalRecord().setMedication(person.getMedicalRecord().getMedication());
+				}
+				if((person.getMedicalRecord().getAllergies() != null) && CollectionUtils.isNotEmpty(person.getMedicalRecord().getAllergies())) {
+					personFound.getMedicalRecord().setAllergies(person.getMedicalRecord().getAllergies());
+				}
+			}
+			if((person.getPhone()!= null) && !(person.getPhone().isEmpty())) {
+				personFound.setPhone(person.getPhone());
+			}
+		}
+	}
+
+>>>>>>> Stashed changes
+>>>>>>> feature/Tests
 	/**
 	 * Delete a person
 	 * @param firstName
@@ -246,12 +346,23 @@ public class RecoveryOfJsonDataInJavaObject {
 			person.getAddress().updateFirestationId(oldfirestationId, newfirestationId);
 		}
 	}
+<<<<<<< HEAD
 
+=======
+<<<<<<< Updated upstream
+	
+	//----------------------------------------/medicalRecord------------------------------------------------------------
+	
+=======
+
+>>>>>>> Stashed changes
+>>>>>>> feature/Tests
 	/**
 	 * Delete mapping by FirestationId
 	 * @param firestationId
 	 * @param address
 	 */
+<<<<<<< HEAD
 	public void deleteMappingByFirestationId(Integer firestationId) {
 		//Delete the mapping by fireStationId
 		if(firestationId != null) {
@@ -260,6 +371,50 @@ public class RecoveryOfJsonDataInJavaObject {
 				person.getAddress().removeFirestationId(firestationId);
 			}
 		}
+=======
+<<<<<<< Updated upstream
+	public MedicalRecord addMedicalRecord(MedicalRecord medicalRecord) {
+		medicalrecords.add(medicalRecord);
+		return medicalRecord;
+=======
+	public void deleteMappingByAddress(String address) {
+		//Delete the mapping by address
+		if(address != null) {
+			List<Person> personsFound=getPersonByAddress(address);
+			for(Person person : personsFound) {
+				person.getAddress().removeAllFirestationIds();
+			}
+		}	
+	}
+
+	//----------------------------------------/medicalRecord------------------------------------------------------------
+
+	/**
+	 * Get person by Id
+	 * @param personId
+	 * @return
+	 */
+	private Person getPersonById(int personId) {
+		for (Person person : persons) {
+			if (person.getId()==(personId)) {
+				return person;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Add a medical record
+	 * @param personId
+	 * @param medicalRecord
+	 */
+	public void addMedicalRecord(int personId,MedicalRecord medicalRecord ) {
+		Person personFound = getPersonById(personId);
+		if(personFound !=null) {
+			personFound.setMedicalRecord(medicalRecord);
+		}
+>>>>>>> Stashed changes
+>>>>>>> feature/Tests
 	}
 	
 	/**
@@ -303,6 +458,7 @@ public class RecoveryOfJsonDataInJavaObject {
 			return null;
 		}
 
+<<<<<<< HEAD
 		/**
 		 * Update medical record of a specific person
 		 * @param firstName
@@ -316,6 +472,28 @@ public class RecoveryOfJsonDataInJavaObject {
 			if(personFound != null) {
 				personFound.setMedicalRecord(person.getMedicalRecord());
 			}
+=======
+	/**
+	 * delete a person's medical record
+	 * @param firstName
+	 * @param lastName
+	 */
+	public void deleteMedicalRecord(String firstName, String lastName) {
+<<<<<<< Updated upstream
+		
+		Person personFound = getPersonByFirstNameAndLastName(firstName, lastName);
+
+		if(personFound != null) {
+			personFound.setMedicalRecord(null);
+=======
+
+		Person personFound = getPersonByFirstNameAndLastName(firstName, lastName);
+
+		if(personFound != null) {
+			personFound.getMedicalRecord().setMedication(null);
+			personFound.getMedicalRecord().setAllergies(null);
+>>>>>>> Stashed changes
+>>>>>>> feature/Tests
 		}
 
 		/**

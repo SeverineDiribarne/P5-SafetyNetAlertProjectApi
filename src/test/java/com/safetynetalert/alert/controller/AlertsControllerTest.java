@@ -1,5 +1,9 @@
 package com.safetynetalert.alert.controller;
 
+<<<<<<< HEAD
+=======
+import static org.mockito.Mockito.doNothing;
+>>>>>>> feature/Tests
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,9 +17,17 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+=======
+import org.mockito.ArgumentCaptor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+>>>>>>> feature/Tests
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -49,6 +61,7 @@ public class AlertsControllerTest {
 		repository.initialize();
 	}
 
+<<<<<<< HEAD
 	//	/**
 	//	 * clean the list after each Test
 	//	 */
@@ -58,6 +71,8 @@ public class AlertsControllerTest {
 	//		result.clear();
 	//	}
 	
+=======
+>>>>>>> feature/Tests
 	/**
 	 * Creation of 3 persons for mock 
 	 * @return
@@ -129,6 +144,10 @@ public class AlertsControllerTest {
 		personToAdd.getAddress().setStreet("290 MullowLand Dr"); 
 		personToAdd.getAddress().setCity("Culver");
 		personToAdd.getAddress().setZip("33000");
+<<<<<<< HEAD
+=======
+		personToAdd.getAddress().setFireStationIds(Arrays.asList(1));
+>>>>>>> feature/Tests
 		personToAdd.setBirthDate("01/02/1999");
 		personToAdd.setEmail("jasminadoe@gmail.com");
 		personToAdd.setPhone("480-461-7896");
@@ -138,7 +157,25 @@ public class AlertsControllerTest {
 
 		return personToAdd;	
 	}
+<<<<<<< HEAD
 	
+=======
+	/**
+	 * Create a new medicalRecord for test
+	 * @return MedicalRecord to add
+	 */
+	public MedicalRecord creationANewMedicalRecord() {
+
+		// creation new person to add
+		MedicalRecord medicalRecordToAdd = new MedicalRecord();
+		medicalRecordToAdd.setMedication(Arrays.asList("Aspirine : 1000mg"));
+		medicalRecordToAdd.setAllergies(Arrays.asList("Lactose"));
+
+
+		return medicalRecordToAdd;	
+	}
+
+>>>>>>> feature/Tests
 	//-------------------------------------GET REQUEST-----------------------------------------------
 
 	/**
@@ -147,10 +184,18 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldGetPersonsListCoveredByTheFireStation() throws Exception{
+<<<<<<< HEAD
 		
 		//GIVEN
 		String stationNumber = "1";
 		List<Person> mockPersonsList = creationPersonsForMock();
+=======
+
+		//GIVEN
+		String stationNumber = "1";
+		List<Person> mockPersonsList = creationPersonsForMock();
+
+>>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 		MvcResult result = this.mockMvc.perform(get("/firestation").param("stationNumber", stationNumber))
@@ -184,14 +229,26 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldGetChildrenListLivingAtTheAddress() throws Exception{
+<<<<<<< HEAD
 		
 		//GIVEN
 		String address = "290 MullowLand Dr";
 		List<Person> mockPersonsList = creationPersonsForMock();
+=======
+
+		//GIVEN
+		String address = "290 MullowLand Dr";
+		List<Person> mockPersonsList = creationPersonsForMock();
+
+>>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 		MvcResult result = this.mockMvc.perform(get("/childAlert").param("address", address))
 				.andExpect(status().isOk()).andReturn();
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/Tests
 		//THEN
 		String content = result.getResponse().getContentAsString();
 		try
@@ -222,6 +279,7 @@ public class AlertsControllerTest {
 		//GIVEN
 		String firestation = "1";
 		List<Person> mockPersonsList = creationPersonsForMock();
+<<<<<<< HEAD
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 		
@@ -229,6 +287,16 @@ public class AlertsControllerTest {
 		MvcResult result = this.mockMvc.perform(get("/phoneAlert").param("firestation", firestation))
 		.andExpect(status().isOk()).andReturn();
 		
+=======
+
+		//WHEN
+		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
+
+		//THEN
+		MvcResult result = this.mockMvc.perform(get("/phoneAlert").param("firestation", firestation))
+				.andExpect(status().isOk()).andReturn();
+
+>>>>>>> feature/Tests
 		String content = result.getResponse().getContentAsString();
 		try
 		{
@@ -253,16 +321,28 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldGetListOfInhabitantsLivingAtTheGivenAddressAsWellAsFirestationNumberServingIt() throws Exception{
+<<<<<<< HEAD
 		
 		//GIVEN
 		String address = "290 MullowLand Dr";
 		List<Person> mockPersonsList = creationPersonsForMock();
+=======
+
+		//GIVEN
+		String address = "290 MullowLand Dr";
+		List<Person> mockPersonsList = creationPersonsForMock();
+
+>>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 
 		//THEN
 		MvcResult result = this.mockMvc.perform(get("/fire").param("address", address))
+<<<<<<< HEAD
 		.andExpect(status().isOk()).andReturn();
+=======
+				.andExpect(status().isOk()).andReturn();
+>>>>>>> feature/Tests
 		String content = result.getResponse().getContentAsString();
 		try
 		{
@@ -292,12 +372,20 @@ public class AlertsControllerTest {
 		//GIVEN
 		String[] stations = {"1","2"};
 		List<Person> mockPersonsList = creationPersonsForMock();
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 
 		//THEN
 		MvcResult result = this.mockMvc.perform(get("/flood/stations").param("stations", stations))
+<<<<<<< HEAD
 		.andExpect(status().isOk()).andReturn();
+=======
+				.andExpect(status().isOk()).andReturn();
+>>>>>>> feature/Tests
 		String content = result.getResponse().getContentAsString();
 		try
 		{
@@ -322,17 +410,29 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldGetLastNameFirstNameAddressAgeEmailAndMedicalRecordOfEachInhabitants() throws Exception{
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> feature/Tests
 		//GIVEN
 		String firstName = "Jane";
 		String lastName = "Doe";
 		List<Person> mockPersonsList = creationPersonsForMock();
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 
 		//THEN
 		MvcResult result = this.mockMvc.perform(get("/personInfo").param("firstName", firstName).param("lastName", lastName))
+<<<<<<< HEAD
 		.andExpect(status().isOk()).andReturn();
+=======
+				.andExpect(status().isOk()).andReturn();
+>>>>>>> feature/Tests
 		String content = result.getResponse().getContentAsString();
 		try
 		{
@@ -362,12 +462,20 @@ public class AlertsControllerTest {
 		//GIVEN
 		String city = "Culver";
 		List<Person> mockPersonsList = creationPersonsForMock();
+<<<<<<< HEAD
+=======
+
+>>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 
 		//THEN
 		MvcResult result = this.mockMvc.perform(get("/communityEmail").param("city", city))
+<<<<<<< HEAD
 		.andExpect(status().isOk()).andReturn();
+=======
+				.andExpect(status().isOk()).andReturn();
+>>>>>>> feature/Tests
 		String content = result.getResponse().getContentAsString();
 		try
 		{
@@ -395,6 +503,7 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldAddANewPersonOnTheJsonListOfPersons() throws Exception{
+<<<<<<< HEAD
 		//TODO Méthode à rectifier NE FONCTIONNE PAS erreur à ligne 411 (entre dans une exception)
 		//GIVEN
 		//adding a new person in the list
@@ -425,6 +534,34 @@ public class AlertsControllerTest {
 			System.err.println(processingException.getMessage());
 			assert(false);
 		}
+=======
+
+		//GIVEN
+		Person newPerson = creationANewPerson();
+		String personAdding = JsonStream.serialize(newPerson);
+
+		//WHEN
+		ArgumentCaptor<Person> valueCapture = ArgumentCaptor.forClass(Person.class);
+		doNothing().when(this.safetyAlertsDAO).addPersons( valueCapture.capture());
+
+		//THEN
+		this.mockMvc.perform(post("/person")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(personAdding))
+		.andExpect(status().isOk()).andReturn();
+		assert(valueCapture.getValue().getFirstName().compareTo(newPerson.getFirstName())==0);
+		assert(valueCapture.getValue().getLastName().compareTo(newPerson.getLastName())==0);
+		assert(valueCapture.getValue().getBirthDate().compareTo(newPerson.getBirthDate())==0);
+		assert(valueCapture.getValue().getEmail().compareTo(newPerson.getEmail())==0);
+		assert(valueCapture.getValue().getPhone().compareTo(newPerson.getPhone())==0);
+		assert(valueCapture.getValue().getAddress().getStreet().compareTo(newPerson.getAddress().getStreet())==0);
+		assert(valueCapture.getValue().getAddress().getCity().compareTo(newPerson.getAddress().getCity())==0);
+		assert(valueCapture.getValue().getAddress().getZip().compareTo(newPerson.getAddress().getZip())==0);
+		assert(valueCapture.getValue().getAddress().getFireStationIds().equals(newPerson.getAddress().getFireStationIds()));
+		assert(valueCapture.getValue().getMedicalRecord().getMedication().equals(newPerson.getMedicalRecord().getMedication()));
+		assert(valueCapture.getValue().getMedicalRecord().getAllergies().equals(newPerson.getMedicalRecord().getAllergies()));
+
+>>>>>>> feature/Tests
 	}
 
 	/**
@@ -433,6 +570,7 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldAddAMappingBetweenFirestationAndAddress() throws Exception{
+<<<<<<< HEAD
 		//TODO Méthode à completer
 		//GIVEN
 
@@ -441,6 +579,26 @@ public class AlertsControllerTest {
 		//THEN
 		this.mockMvc.perform(post("/firestation"))
 		.andExpect(status().isOk());
+=======
+
+		//GIVEN
+		Integer firestationId = 1;
+		String address = "1509 Culver St";
+
+		//WHEN
+		ArgumentCaptor<Integer> argumentCaptorFirestationId = ArgumentCaptor.forClass(Integer.class);
+		ArgumentCaptor<String> argumentCaptorAddress = ArgumentCaptor.forClass(String.class);
+		doNothing().when(this.safetyAlertsDAO).addMapping( argumentCaptorFirestationId.capture(), argumentCaptorAddress.capture());
+
+		//THEN
+		this.mockMvc.perform(post("/firestation")
+				.param("firestationId", "1")
+				.param("address", address))
+		.andExpect(status().isOk()).andReturn();
+		assert(argumentCaptorFirestationId.getValue().compareTo(firestationId)==0);
+		assert(argumentCaptorAddress.getValue().compareTo(address)==0);
+
+>>>>>>> feature/Tests
 	}
 
 	/**
@@ -449,6 +607,7 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldAddAMedicalRecordToAPerson() throws Exception{
+<<<<<<< HEAD
 		//TODO Méthode à completer
 		//GIVEN
 
@@ -457,16 +616,51 @@ public class AlertsControllerTest {
 		//THEN
 		this.mockMvc.perform(post("/medicalRecord"))
 		.andExpect(status().isOk());
+=======
+
+		//GIVEN
+		int personId = 8;
+		MedicalRecord newMedicalRecord = creationANewMedicalRecord();
+		String medicalRecordToAdd = JsonStream.serialize(newMedicalRecord);
+
+		//WHEN
+		ArgumentCaptor<Integer> argumentCaptorPersonId = ArgumentCaptor.forClass(Integer.class);
+		ArgumentCaptor<MedicalRecord> argumentCaptorMedicalRecord = ArgumentCaptor.forClass(MedicalRecord.class);
+		doNothing().when(this.safetyAlertsDAO).addMedicalRecord( argumentCaptorPersonId.capture(), argumentCaptorMedicalRecord.capture());
+
+		//THEN
+		this.mockMvc.perform(post("/medicalRecord")
+				.param("personId", "8")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(medicalRecordToAdd))
+		.andExpect(status().isOk()).andReturn();
+		assert(argumentCaptorPersonId.getValue().compareTo(personId)==0);
+		assert(argumentCaptorMedicalRecord.getValue().getMedication().equals(newMedicalRecord.getMedication()));
+		assert(argumentCaptorMedicalRecord.getValue().getAllergies().equals(newMedicalRecord.getAllergies()));
+>>>>>>> feature/Tests
 	}
 
 	//-------------------------------------UPDATE REQUEST-------------------------------------------
 
 	/**
+<<<<<<< HEAD
+=======
+	 * @param personToUpdate
+	 * @return person to convert
+	 */
+	private String conversionToJson(Person personToUpdate) {
+		String personToUpdateConvertedToJson = JsonStream.serialize(personToUpdate);
+		return personToUpdateConvertedToJson;
+	}
+
+	/**
+>>>>>>> feature/Tests
 	 * Test to verify @PutMapping /person
 	 * @throws Exception
 	 */
 	@Test
 	public void testShouldUpdateASpecificPersonOfTheJsonListOfPersons() throws Exception{
+<<<<<<< HEAD
 		//TODO Méthode à completer
 		//GIVEN
 
@@ -477,12 +671,54 @@ public class AlertsControllerTest {
 		.andExpect(status().isOk());
 	}
 
+=======
+
+		//GIVEN
+		String firstName = "John";
+		String lastName = "Boyd";
+		Person personToUpdate = new Person();
+		Address addressOfThePersonToUpdate = new Address();
+
+		personToUpdate.setBirthDate("04/29/1946");		
+		addressOfThePersonToUpdate.setStreet("951 LoneTree Rd");
+		addressOfThePersonToUpdate.setFireStationIds(Arrays.asList(2));
+		personToUpdate.setAddress(addressOfThePersonToUpdate);
+		personToUpdate.setPhone("841-874-7458");
+
+		String personToUpdateConvertedToJson = conversionToJson(personToUpdate);
+
+		//WHEN
+		ArgumentCaptor<String> argumentCaptorFirstName = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<String> argumentCaptorLastName = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<Person> argumentCaptorPersonToUpdate = ArgumentCaptor.forClass(Person.class);
+		doNothing().when(this.safetyAlertsDAO).updatePerson( argumentCaptorFirstName.capture(),
+				argumentCaptorLastName.capture(), argumentCaptorPersonToUpdate.capture());
+
+		//THEN
+		this.mockMvc.perform(put("/person")
+				.param("firstName", firstName)
+				.param("lastName", lastName)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(personToUpdateConvertedToJson))
+		.andExpect(status().isOk()).andReturn();
+		assert(argumentCaptorFirstName.getValue().compareTo(firstName)==0);
+		assert(argumentCaptorLastName.getValue().compareTo(lastName)==0);
+		assert(argumentCaptorPersonToUpdate.getValue().getBirthDate().compareTo(personToUpdate.getBirthDate()) == 0);
+		assert(argumentCaptorPersonToUpdate.getValue().getPhone().compareTo(personToUpdate.getPhone()) == 0);		 
+		assert(argumentCaptorPersonToUpdate.getValue().getAddress().getStreet().compareTo(personToUpdate.getAddress().getStreet()) == 0);
+		assert(argumentCaptorPersonToUpdate.getValue().getAddress().getFireStationIds().equals(personToUpdate.getAddress().getFireStationIds()));
+	}
+
+
+
+>>>>>>> feature/Tests
 	/**
 	 * Test to verify @PutMapping /firestation
 	 * @throws Exception
 	 */
 	@Test
 	public void testShouldUpdateTheFirestationNumberToAnAddress() throws Exception{
+<<<<<<< HEAD
 		//TODO Méthode à completer
 		//GIVEN
 
@@ -491,6 +727,30 @@ public class AlertsControllerTest {
 		//THEN
 		this.mockMvc.perform(put("/firestation"))
 		.andExpect(status().isOk());
+=======
+
+		//GIVEN
+		String address = "951 LoneTree Rd";
+		int oldFirestationId = 4;
+		int newFirestationId = 2;
+
+		//WHEN
+		ArgumentCaptor<Integer> argumentCaptorOldFirestationId = ArgumentCaptor.forClass(Integer.class);
+		ArgumentCaptor<Integer> argumentCaptorNewFirestationId = ArgumentCaptor.forClass(Integer.class);
+		ArgumentCaptor<String> argumentCaptorAddress = ArgumentCaptor.forClass(String.class);
+		doNothing().when(this.safetyAlertsDAO).updateFirestationNumber( argumentCaptorOldFirestationId.capture(),
+				argumentCaptorNewFirestationId.capture(), argumentCaptorAddress.capture());
+
+		//THEN
+		this.mockMvc.perform(put("/firestation")
+				.param("oldFirestationId", "4")
+				.param("newFirestationId", "2")
+				.param("address", address))
+		.andExpect(status().isOk()).andReturn();
+		assert(argumentCaptorOldFirestationId.getValue().compareTo(oldFirestationId)==0);
+		assert(argumentCaptorNewFirestationId.getValue().compareTo(newFirestationId)==0);
+		assert(argumentCaptorAddress.getValue().compareTo(address) == 0);
+>>>>>>> feature/Tests
 	}
 
 	/**
@@ -499,6 +759,7 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldUpdateMedicalRecordToASpecificPerson() throws Exception{
+<<<<<<< HEAD
 		//TODO Méthode à completer
 		//GIVEN
 
@@ -558,4 +819,132 @@ public class AlertsControllerTest {
 		this.mockMvc.perform(delete("/medicalRecord"))
 		.andExpect(status().isOk());
 	}
+=======
+		
+		//GIVEN
+		String firstName = "Jane";
+		String lastName = "Doe";
+		List<Person> mockPersonsList = creationPersonsForMock();
+
+		Person personToUpdate = new Person();
+		for (Person person : mockPersonsList) {
+			if(person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
+				personToUpdate = person;
+			}
+		}
+		MedicalRecord medicalRecordOfThePersonToUpdate = new MedicalRecord();
+		medicalRecordOfThePersonToUpdate.setMedication(Arrays.asList("Paracetamol : 1000mg"));
+		medicalRecordOfThePersonToUpdate.setAllergies(Arrays.asList("Ixprim : 250mg", "Lactose"));
+		personToUpdate.setMedicalRecord(medicalRecordOfThePersonToUpdate);
+
+		String personToUpdateConvertedToJson = conversionToJson(personToUpdate);
+		//WHEN
+		ArgumentCaptor<String> argumentCaptorFirstName = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<String> argumentCaptorLastName = ArgumentCaptor.forClass(String.class);
+		ArgumentCaptor<Person> argumentCaptorPersonToUpdate = ArgumentCaptor.forClass(Person.class);
+		doNothing().when(this.safetyAlertsDAO).updateMedicalRecord( argumentCaptorFirstName.capture(),
+				argumentCaptorLastName.capture(), argumentCaptorPersonToUpdate.capture());
+
+		//THEN
+		this.mockMvc.perform(put("/medicalRecord")
+				.param("firstName", firstName)
+				.param("lastName", lastName)
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(personToUpdateConvertedToJson))
+		.andExpect(status().isOk()).andReturn();
+		assert(argumentCaptorFirstName.getValue().compareTo(firstName)==0);
+		assert(argumentCaptorLastName.getValue().compareTo(lastName)==0);
+		assert(argumentCaptorPersonToUpdate.getValue().getMedicalRecord().getMedication().equals(personToUpdate.getMedicalRecord().getMedication()));
+		assert(argumentCaptorPersonToUpdate.getValue().getMedicalRecord().getAllergies().equals(personToUpdate.getMedicalRecord().getAllergies()));
+	}
+
+//-------------------------------------DELETE REQUEST-------------------------------------------
+
+/**
+ * Test to verify @DeleteMapping /person
+ * @throws Exception
+ */
+@Test
+public void  testShouldDeleteASpecificPersonOfTheJsonListOfPersons() throws Exception{
+
+	//GIVEN
+	String firstName = "John";
+	String lastName = "Boyd";
+
+	//WHEN
+	ArgumentCaptor<String> argumentCaptorFirstName = ArgumentCaptor.forClass(String.class);
+	ArgumentCaptor<String> argumentCaptorLastName = ArgumentCaptor.forClass(String.class);
+	doNothing().when(this.safetyAlertsDAO).deletePerson( argumentCaptorFirstName.capture(), argumentCaptorLastName.capture());
+
+	//THEN
+	this.mockMvc.perform(delete("/person")
+			.param("firstName", firstName)
+			.param("lastName", lastName))
+	.andExpect(status().isOk()).andReturn();
+	assert(argumentCaptorFirstName.getValue().compareTo(firstName)==0);
+	assert(argumentCaptorLastName.getValue().compareTo(lastName)==0);
+}
+
+/**
+ * Test to verify @DeleteMapping /firestation
+ * @throws Exception
+ */
+@Test
+public void testShouldDeleteMappingOfAFirestation() throws Exception{
+
+	//GIVEN
+	Integer firestationId = 1;
+	//WHEN
+	ArgumentCaptor<Integer> argumentCaptorFirestationId = ArgumentCaptor.forClass(Integer.class);
+	doNothing().when(this.safetyAlertsDAO).deleteMappingByFirestationId( argumentCaptorFirestationId.capture());
+
+	//THEN
+	this.mockMvc.perform(delete("/firestation").param("firestationId", "1"))
+	.andExpect(status().isOk()).andReturn();
+	assert(argumentCaptorFirestationId.getValue().compareTo(firestationId)==0);
+}
+
+/**
+ * Test to verify @DeleteMapping /firestation
+ * @throws Exception
+ */
+@Test
+public void testShouldDeleteMappingOfAnAddress() throws Exception{
+
+	//GIVEN
+	String address = "1509 Culver St";
+
+	//WHEN
+	ArgumentCaptor<String> argumentCaptorAddress = ArgumentCaptor.forClass(String.class);
+	doNothing().when(this.safetyAlertsDAO).deleteMappingByAddress( argumentCaptorAddress.capture());
+
+	//THEN
+	this.mockMvc.perform(delete("/firestation").param("address", address))
+	.andExpect(status().isOk()).andReturn();
+	assert(argumentCaptorAddress.getValue().compareTo(address)==0);
+}
+
+/**
+ * Test to verify @DeleteMapping /medicalRecord
+ * @throws Exception
+ */
+@Test
+public void testShouldDeleteMedicalRecordOfASpecificPerson() throws Exception{
+
+	//GIVEN
+	String firstName = "John";
+	String lastName = "Boyd";
+
+	//WHEN
+	ArgumentCaptor<String> argumentCaptorFirstName = ArgumentCaptor.forClass(String.class);
+	ArgumentCaptor<String> argumentCaptorLastName = ArgumentCaptor.forClass(String.class);
+	doNothing().when(this.safetyAlertsDAO).deleteMedicalRecord( argumentCaptorFirstName.capture(),argumentCaptorLastName.capture() );
+
+	//THEN
+	this.mockMvc.perform(delete("/medicalRecord").param("firstName", firstName).param("lastName", lastName))
+	.andExpect(status().isOk()).andReturn();
+	assert(argumentCaptorFirstName.getValue().compareTo(firstName)==0);
+	assert(argumentCaptorLastName.getValue().compareTo(lastName)==0);
+}
+>>>>>>> feature/Tests
 }

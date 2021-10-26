@@ -155,8 +155,8 @@ public class AlertsController {
 	 * @return person added
 	 */
 	@PostMapping(value = "/person")
-	public Person createNewPerson(@RequestBody Person person) {
-		return safetyAlertsDao.addPersons(person);
+	public void createNewPerson(@RequestBody Person person) {
+		 safetyAlertsDao.addPersons(person);
 	}
 
 	/**

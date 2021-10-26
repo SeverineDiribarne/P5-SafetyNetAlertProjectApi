@@ -34,6 +34,7 @@ public class SafetyAlertsDAOTest {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * clean the list after each Test
 	 */
 	@AfterEach
@@ -43,6 +44,8 @@ public class SafetyAlertsDAOTest {
 	}
 	
 	/**
+=======
+>>>>>>> feature/Tests
 	 * Create a new person for test
 	 * @return Person to add
 	 */
@@ -66,7 +69,11 @@ public class SafetyAlertsDAOTest {
 
 		return personToAdd;	
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> feature/Tests
 	/**
 	 * Test to verify the existence of people in the list
 	 */
@@ -101,15 +108,22 @@ public class SafetyAlertsDAOTest {
 		assert ( result.get(0).getMedication().equals(Arrays.asList("aznol:350mg","hydrapermazol:100mg")));
 		assert(result.get(0).getAllergies().equals(Arrays.asList("nillacilan")));
 	}
+<<<<<<< HEAD
 	
 	//---------------------------------------Person--------------------------------------------------
 	
+=======
+
+	//---------------------------------------Person--------------------------------------------------
+
+>>>>>>> feature/Tests
 	/**
 	 * Test to verify an addition of a new person in the list
 	 * @throws Exception
 	 */
 	@Test
 	public void addPersonTest() throws Exception{
+<<<<<<< HEAD
 		//TODO methode à rectifier --> Erreur : status 415 / error msg:null / no content type and no body
 		
 		//GIVEN
@@ -120,6 +134,17 @@ public class SafetyAlertsDAOTest {
 		// add this person in the list
 		safetyAlertDao.addPersons(personToAdd);
 		
+=======
+
+		//GIVEN
+		//adding a new person in the list
+		Person personToAdd = creationANewPerson();
+
+		//WHEN
+		// add this person in the list
+		safetyAlertDao.addPersons(personToAdd);
+
+>>>>>>> feature/Tests
 		//THEN
 		// check the new person in the list
 		List <Person> result = safetyAlertDao.getPersons();
@@ -138,7 +163,38 @@ public class SafetyAlertsDAOTest {
 	 */
 	@Test
 	public void updatePersonTest()throws Exception{
+<<<<<<< HEAD
 		//TODO methode à compléter
+=======
+
+		//GIVEN
+		String firstName = "John";
+		String lastName = "Boyd";
+
+		Person personToUpdate = new Person();
+		for (Person person : safetyAlertDao.getPersons()) {
+			if(person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
+				personToUpdate = person;
+			}
+		}
+		personToUpdate.getAddress().setStreet("290 MullowLand Dr"); 
+		personToUpdate.getAddress().setCity("Culver");
+		personToUpdate.getAddress().setZip("33000");
+		personToUpdate.setPhone("480-461-7789");
+		personToUpdate.getMedicalRecord().setMedication(Arrays.asList("Ixprim:250mg" , "Ibuprofene:1000mg"));
+		personToUpdate.getMedicalRecord().setAllergies(Arrays.asList("seafood" , "gluten"));
+
+		//THEN
+		safetyAlertDao.updatePerson(firstName, lastName, personToUpdate);
+
+		//WHEN
+		assert(personToUpdate.getAddress().getStreet().compareTo("290 MullowLand Dr")==0);
+		assert(personToUpdate.getAddress().getCity().compareTo("Culver")==0);
+		assert(personToUpdate.getAddress().getZip().compareTo("33000")==0);
+		assert(personToUpdate.getPhone().compareTo("480-461-7789")==0);
+		assert(personToUpdate.getMedicalRecord().getAllergies().containsAll(Arrays.asList("seafood" , "gluten")));
+		assert(personToUpdate.getMedicalRecord().getMedication().containsAll(Arrays.asList("Ixprim:250mg" , "Ibuprofene:1000mg")));
+>>>>>>> feature/Tests
 	}
 
 	/**
@@ -147,66 +203,224 @@ public class SafetyAlertsDAOTest {
 	 */
 	@Test
 	public void deletePersonTest()throws Exception{
+<<<<<<< HEAD
 		//TODO methode à compléter
 	}
 
 	//---------------------------------------Firestation---------------------------------------------
 	
+=======
+
+		safetyAlertDao.deletePerson("John", "Boyd");
+
+		List<Person> resultList = safetyAlertDao.getPersons();
+		boolean personFound = false;
+
+		for(Person person : resultList) {
+			if (person.getFirstName().contains("John") && person.getLastName().contains("Boyd")) {
+				personFound = true;
+			}
+		}
+		assert(personFound==false);
+	}
+
+	//---------------------------------------Firestation---------------------------------------------
+
+>>>>>>> feature/Tests
 	/**
 	 * Test to verify an addition of a mapping of a firestation
 	 */
 	@Test
 	public void addMappingTest() {
+<<<<<<< HEAD
 		//TODO methode à compléter
 	}
 	
+=======
+
+		//GIVEN
+		int firestationId = 5;
+		String address = "1509 Culver St";
+		List<Person> persons = safetyAlertDao.getPersons();
+
+		//WHEN
+		safetyAlertDao.addMapping(firestationId,address);
+
+		//THEN
+		assert(persons.get(0).getAddress().getFireStationIds().contains(5));
+		assert(persons.get(0).getAddress().getStreet().compareTo(address)==0);
+		assert(persons.get(1).getAddress().getFireStationIds().contains(5));
+		assert(persons.get(1).getAddress().getStreet().compareTo(address)==0);
+		assert(persons.get(3).getAddress().getFireStationIds().contains(5));
+		assert(persons.get(3).getAddress().getStreet().compareTo(address)==0);
+	}
+
+>>>>>>> feature/Tests
 	/**
 	 * Test to verify the modification of a mapping of a firestation for a specific address 
 	 */
 	@Test
 	public void updateMappingTest() {
+<<<<<<< HEAD
 		//TODO methode à compléter
 	}
 	
+=======
+
+		//GIVEN
+		int oldFirestationId = 3;
+		int newFirestationId = 5;
+		String address = "1509 Culver St";
+		List<Person> persons = safetyAlertDao.getPersons();
+
+		//WHEN
+		safetyAlertDao.updateFirestationNumber(oldFirestationId, newFirestationId, address);
+
+		//THEN
+		assert(persons.get(0).getAddress().getFireStationIds().contains(5));
+		assert(persons.get(0).getAddress().getStreet().compareTo(address)==0);
+		assert(persons.get(1).getAddress().getFireStationIds().contains(5));
+		assert(persons.get(1).getAddress().getStreet().compareTo(address)==0);
+		assert(persons.get(3).getAddress().getFireStationIds().contains(5));
+		assert(persons.get(3).getAddress().getStreet().compareTo(address)==0);
+	}
+
+>>>>>>> feature/Tests
 	/**
 	 * Test to verify the deletion of a mapping of a firestation 
 	 */
 	@Test
 	public void deleteMappingOfAFirestationTest() {
+<<<<<<< HEAD
 		//TODO methode à compléter
 	}
 	
+=======
+
+		//GIVEN
+		int firestationId = 3;
+		List<Person> persons = safetyAlertDao.getPersons();
+
+		//WHEN
+		safetyAlertDao.deleteMappingByFirestationId(firestationId);
+
+		//THEN
+		assert(persons.get(0).getAddress().getFireStationIds().isEmpty());
+		assert(persons.get(6).getAddress().getFireStationIds().isEmpty());
+		assert(persons.get(21).getAddress().getFireStationIds().isEmpty());
+	}
+
+>>>>>>> feature/Tests
 	/**
 	 * Test to verify the deletion of a mapping of a specific address
 	 */
 	@Test
 	public void deleteMappingOfAnAddressTest() {
+<<<<<<< HEAD
 		//TODO methode à compléter
 	}
 	
 	//--------------------------------------MedicalRecord--------------------------------------------
 	
+=======
+
+		//GIVEN
+		String address = "748 Townings Dr";
+		List<Person> persons = safetyAlertDao.getPersons();
+
+		//WHEN
+		safetyAlertDao.deleteMappingByAddress(address);
+
+		//THEN
+		assert(persons.get(8).getAddress().getFireStationIds().isEmpty());
+		assert(persons.get(21).getAddress().getFireStationIds().isEmpty());
+	}
+
+	//--------------------------------------MedicalRecord--------------------------------------------
+
+>>>>>>> feature/Tests
 	/**
 	 * Test to verify an addition of a medical record of a specific person
 	 */
 	@Test
 	public void addMedicalRecordForASpecificPersonTest() {
+<<<<<<< HEAD
 		//TODO methode à compléter
 	}
 	
+=======
+
+		//GIVEN
+		int personId=10; 
+		MedicalRecord medicalRecord = new MedicalRecord();
+		medicalRecord.setMedication(Arrays.asList("Aspirin", "Niflugel"));
+		medicalRecord.setAllergies(Arrays.asList("Oyster"));
+		List<Person> persons = safetyAlertDao.getPersons();
+
+		//WHEN
+		safetyAlertDao.addMedicalRecord(personId, medicalRecord);
+
+		//THEN
+		assert(persons.get(10).getMedicalRecord().getMedication().containsAll(Arrays.asList("Aspirin", "Niflugel")));
+		assert(persons.get(10).getMedicalRecord().getAllergies().containsAll(Arrays.asList("Oyster")));
+	}
+
+>>>>>>> feature/Tests
 	/**
 	 * Test to verify the modification of the medical record for a specific person 
 	 */
 	@Test
 	public void updateMedicalRecordForASpecificPersonTest() {
+<<<<<<< HEAD
 		//TODO methode à compléter
 	}
 	
+=======
+
+		//GIVEN
+		String firstName = "Tony";
+		String lastName = "Cooper";
+		Person personToUpdate = new Person();
+		List<Person> persons = safetyAlertDao.getPersons();
+
+		for ( Person person : persons) {
+			if(person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
+				personToUpdate = person;
+				personToUpdate.getMedicalRecord().setMedication(Arrays.asList("Niflugel", "Paracetamol"));
+				personToUpdate.getMedicalRecord().setAllergies(Arrays.asList("Shellfish"));
+			}
+		}
+
+		//WHEN
+		safetyAlertDao.updateMedicalRecord(firstName, lastName, personToUpdate );
+
+		//THEN
+		assert(personToUpdate.getMedicalRecord().getMedication().equals(Arrays.asList("Niflugel", "Paracetamol")));
+		assert(personToUpdate.getMedicalRecord().getAllergies().equals(Arrays.asList("Shellfish")));
+	}
+
+>>>>>>> feature/Tests
 	/**
 	 * Test to verify the deletion of the medical record for a specific person
 	 */
 	@Test
 	public void deleteMedicalRecordForASpecificPersonTest() {
+<<<<<<< HEAD
 		//TODO methode à compléter
+=======
+
+		//GIVEN
+		String firstName = "Tony";
+		String lastName = "Cooper";
+
+		List<Person> persons = safetyAlertDao.getPersons();
+
+		//WHEN
+		safetyAlertDao.deleteMedicalRecord(firstName, lastName);
+
+		//THEN
+		assert(persons.get(9).getMedicalRecord().getMedication()== null || persons.get(9).getMedicalRecord().getMedication().isEmpty());
+		assert(persons.get(9).getMedicalRecord().getAllergies()== null || persons.get(9).getMedicalRecord().getMedication().isEmpty());
+>>>>>>> feature/Tests
 	}
 }

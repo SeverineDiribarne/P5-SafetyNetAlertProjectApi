@@ -1,7 +1,10 @@
 package com.safetynetalert.alert.model;
 
+<<<<<<< HEAD
 import java.util.Arrays;
 
+=======
+>>>>>>> feature/Tests
 import org.junit.jupiter.api.Test;
 
 public class PersonTest {
