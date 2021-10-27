@@ -1,9 +1,6 @@
-package com.safetynetalert.alert.controller;
+package com.safetyNetAlert.Alert.controller;
 
-<<<<<<< HEAD
-=======
 import static org.mockito.Mockito.doNothing;
->>>>>>> feature/Tests
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -17,17 +14,11 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-<<<<<<< HEAD
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-=======
 import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
->>>>>>> feature/Tests
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -35,6 +26,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jsoniter.output.JsonStream;
+import com.safetynetalert.alert.controller.AlertsController;
 import com.safetynetalert.alert.model.Address;
 import com.safetynetalert.alert.model.MedicalRecord;
 import com.safetynetalert.alert.model.Person;
@@ -61,18 +53,6 @@ public class AlertsControllerTest {
 		repository.initialize();
 	}
 
-<<<<<<< HEAD
-	//	/**
-	//	 * clean the list after each Test
-	//	 */
-	//	@AfterAll
-	//	public static void tearDown(){
-	//		List<Person> result = RecoveryOfJsonDataInJavaObject.getInstance().getPersons();
-	//		result.clear();
-	//	}
-	
-=======
->>>>>>> feature/Tests
 	/**
 	 * Creation of 3 persons for mock 
 	 * @return
@@ -144,10 +124,7 @@ public class AlertsControllerTest {
 		personToAdd.getAddress().setStreet("290 MullowLand Dr"); 
 		personToAdd.getAddress().setCity("Culver");
 		personToAdd.getAddress().setZip("33000");
-<<<<<<< HEAD
-=======
 		personToAdd.getAddress().setFireStationIds(Arrays.asList(1));
->>>>>>> feature/Tests
 		personToAdd.setBirthDate("01/02/1999");
 		personToAdd.setEmail("jasminadoe@gmail.com");
 		personToAdd.setPhone("480-461-7896");
@@ -157,9 +134,6 @@ public class AlertsControllerTest {
 
 		return personToAdd;	
 	}
-<<<<<<< HEAD
-	
-=======
 	/**
 	 * Create a new medicalRecord for test
 	 * @return MedicalRecord to add
@@ -175,7 +149,6 @@ public class AlertsControllerTest {
 		return medicalRecordToAdd;	
 	}
 
->>>>>>> feature/Tests
 	//-------------------------------------GET REQUEST-----------------------------------------------
 
 	/**
@@ -184,18 +157,11 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldGetPersonsListCoveredByTheFireStation() throws Exception{
-<<<<<<< HEAD
-		
-		//GIVEN
-		String stationNumber = "1";
-		List<Person> mockPersonsList = creationPersonsForMock();
-=======
 
 		//GIVEN
 		String stationNumber = "1";
 		List<Person> mockPersonsList = creationPersonsForMock();
 
->>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 		MvcResult result = this.mockMvc.perform(get("/firestation").param("stationNumber", stationNumber))
@@ -229,26 +195,16 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldGetChildrenListLivingAtTheAddress() throws Exception{
-<<<<<<< HEAD
-		
-		//GIVEN
-		String address = "290 MullowLand Dr";
-		List<Person> mockPersonsList = creationPersonsForMock();
-=======
 
 		//GIVEN
 		String address = "290 MullowLand Dr";
 		List<Person> mockPersonsList = creationPersonsForMock();
 
->>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 		MvcResult result = this.mockMvc.perform(get("/childAlert").param("address", address))
 				.andExpect(status().isOk()).andReturn();
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/Tests
 		//THEN
 		String content = result.getResponse().getContentAsString();
 		try
@@ -279,15 +235,6 @@ public class AlertsControllerTest {
 		//GIVEN
 		String firestation = "1";
 		List<Person> mockPersonsList = creationPersonsForMock();
-<<<<<<< HEAD
-		//WHEN
-		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
-		
-		//THEN
-		MvcResult result = this.mockMvc.perform(get("/phoneAlert").param("firestation", firestation))
-		.andExpect(status().isOk()).andReturn();
-		
-=======
 
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
@@ -296,7 +243,6 @@ public class AlertsControllerTest {
 		MvcResult result = this.mockMvc.perform(get("/phoneAlert").param("firestation", firestation))
 				.andExpect(status().isOk()).andReturn();
 
->>>>>>> feature/Tests
 		String content = result.getResponse().getContentAsString();
 		try
 		{
@@ -321,28 +267,17 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldGetListOfInhabitantsLivingAtTheGivenAddressAsWellAsFirestationNumberServingIt() throws Exception{
-<<<<<<< HEAD
-		
-		//GIVEN
-		String address = "290 MullowLand Dr";
-		List<Person> mockPersonsList = creationPersonsForMock();
-=======
 
 		//GIVEN
 		String address = "290 MullowLand Dr";
 		List<Person> mockPersonsList = creationPersonsForMock();
 
->>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 
 		//THEN
 		MvcResult result = this.mockMvc.perform(get("/fire").param("address", address))
-<<<<<<< HEAD
-		.andExpect(status().isOk()).andReturn();
-=======
 				.andExpect(status().isOk()).andReturn();
->>>>>>> feature/Tests
 		String content = result.getResponse().getContentAsString();
 		try
 		{
@@ -372,20 +307,13 @@ public class AlertsControllerTest {
 		//GIVEN
 		String[] stations = {"1","2"};
 		List<Person> mockPersonsList = creationPersonsForMock();
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 
 		//THEN
 		MvcResult result = this.mockMvc.perform(get("/flood/stations").param("stations", stations))
-<<<<<<< HEAD
-		.andExpect(status().isOk()).andReturn();
-=======
 				.andExpect(status().isOk()).andReturn();
->>>>>>> feature/Tests
 		String content = result.getResponse().getContentAsString();
 		try
 		{
@@ -410,29 +338,18 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldGetLastNameFirstNameAddressAgeEmailAndMedicalRecordOfEachInhabitants() throws Exception{
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> feature/Tests
 		//GIVEN
 		String firstName = "Jane";
 		String lastName = "Doe";
 		List<Person> mockPersonsList = creationPersonsForMock();
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 
 		//THEN
 		MvcResult result = this.mockMvc.perform(get("/personInfo").param("firstName", firstName).param("lastName", lastName))
-<<<<<<< HEAD
-		.andExpect(status().isOk()).andReturn();
-=======
 				.andExpect(status().isOk()).andReturn();
->>>>>>> feature/Tests
 		String content = result.getResponse().getContentAsString();
 		try
 		{
@@ -462,20 +379,13 @@ public class AlertsControllerTest {
 		//GIVEN
 		String city = "Culver";
 		List<Person> mockPersonsList = creationPersonsForMock();
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/Tests
 		//WHEN
 		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
 
 		//THEN
 		MvcResult result = this.mockMvc.perform(get("/communityEmail").param("city", city))
-<<<<<<< HEAD
-		.andExpect(status().isOk()).andReturn();
-=======
 				.andExpect(status().isOk()).andReturn();
->>>>>>> feature/Tests
 		String content = result.getResponse().getContentAsString();
 		try
 		{
@@ -503,38 +413,6 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldAddANewPersonOnTheJsonListOfPersons() throws Exception{
-<<<<<<< HEAD
-		//TODO Méthode à rectifier NE FONCTIONNE PAS erreur à ligne 411 (entre dans une exception)
-		//GIVEN
-		//adding a new person in the list
-		String personAdding = JsonStream.serialize(creationANewPerson());
-		List<Person> mockPersonsList = creationPersonsForMock();
-		
-		//WHEN
-		when(this.safetyAlertsDAO.getPersons()).thenReturn(mockPersonsList);
-		
-		//THEN
-		MvcResult result = this.mockMvc.perform(post("/person").content(personAdding))
-		.andExpect(status().isOk()).andReturn();
-		String content = result.getResponse().getContentAsString();
-		
-		try
-		{
-			List<Person> persons  = Arrays.asList(new ObjectMapper().readValue(content, Person[].class));
-			assert(persons.get(3).getFirstName().compareTo("Jasmina") == 0);
-			assert(persons.get(3).getLastName().compareTo("Doe") == 0);
-		}
-		catch(JsonMappingException mappingException)
-		{
-			System.err.println(mappingException.getMessage());
-			assert(false);
-		}
-		catch(JsonProcessingException processingException)
-		{
-			System.err.println(processingException.getMessage());
-			assert(false);
-		}
-=======
 
 		//GIVEN
 		Person newPerson = creationANewPerson();
@@ -561,7 +439,6 @@ public class AlertsControllerTest {
 		assert(valueCapture.getValue().getMedicalRecord().getMedication().equals(newPerson.getMedicalRecord().getMedication()));
 		assert(valueCapture.getValue().getMedicalRecord().getAllergies().equals(newPerson.getMedicalRecord().getAllergies()));
 
->>>>>>> feature/Tests
 	}
 
 	/**
@@ -570,16 +447,6 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldAddAMappingBetweenFirestationAndAddress() throws Exception{
-<<<<<<< HEAD
-		//TODO Méthode à completer
-		//GIVEN
-
-		//WHEN
-
-		//THEN
-		this.mockMvc.perform(post("/firestation"))
-		.andExpect(status().isOk());
-=======
 
 		//GIVEN
 		Integer firestationId = 1;
@@ -598,7 +465,6 @@ public class AlertsControllerTest {
 		assert(argumentCaptorFirestationId.getValue().compareTo(firestationId)==0);
 		assert(argumentCaptorAddress.getValue().compareTo(address)==0);
 
->>>>>>> feature/Tests
 	}
 
 	/**
@@ -607,16 +473,6 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldAddAMedicalRecordToAPerson() throws Exception{
-<<<<<<< HEAD
-		//TODO Méthode à completer
-		//GIVEN
-
-		//WHEN
-
-		//THEN
-		this.mockMvc.perform(post("/medicalRecord"))
-		.andExpect(status().isOk());
-=======
 
 		//GIVEN
 		int personId = 8;
@@ -637,14 +493,11 @@ public class AlertsControllerTest {
 		assert(argumentCaptorPersonId.getValue().compareTo(personId)==0);
 		assert(argumentCaptorMedicalRecord.getValue().getMedication().equals(newMedicalRecord.getMedication()));
 		assert(argumentCaptorMedicalRecord.getValue().getAllergies().equals(newMedicalRecord.getAllergies()));
->>>>>>> feature/Tests
 	}
 
 	//-------------------------------------UPDATE REQUEST-------------------------------------------
 
 	/**
-<<<<<<< HEAD
-=======
 	 * @param personToUpdate
 	 * @return person to convert
 	 */
@@ -654,24 +507,11 @@ public class AlertsControllerTest {
 	}
 
 	/**
->>>>>>> feature/Tests
 	 * Test to verify @PutMapping /person
 	 * @throws Exception
 	 */
 	@Test
 	public void testShouldUpdateASpecificPersonOfTheJsonListOfPersons() throws Exception{
-<<<<<<< HEAD
-		//TODO Méthode à completer
-		//GIVEN
-
-		//WHEN
-
-		//THEN
-		this.mockMvc.perform(put("/person"))
-		.andExpect(status().isOk());
-	}
-
-=======
 
 		//GIVEN
 		String firstName = "John";
@@ -711,23 +551,12 @@ public class AlertsControllerTest {
 
 
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify @PutMapping /firestation
 	 * @throws Exception
 	 */
 	@Test
 	public void testShouldUpdateTheFirestationNumberToAnAddress() throws Exception{
-<<<<<<< HEAD
-		//TODO Méthode à completer
-		//GIVEN
-
-		//WHEN
-
-		//THEN
-		this.mockMvc.perform(put("/firestation"))
-		.andExpect(status().isOk());
-=======
 
 		//GIVEN
 		String address = "951 LoneTree Rd";
@@ -750,7 +579,6 @@ public class AlertsControllerTest {
 		assert(argumentCaptorOldFirestationId.getValue().compareTo(oldFirestationId)==0);
 		assert(argumentCaptorNewFirestationId.getValue().compareTo(newFirestationId)==0);
 		assert(argumentCaptorAddress.getValue().compareTo(address) == 0);
->>>>>>> feature/Tests
 	}
 
 	/**
@@ -759,67 +587,6 @@ public class AlertsControllerTest {
 	 */
 	@Test
 	public void testShouldUpdateMedicalRecordToASpecificPerson() throws Exception{
-<<<<<<< HEAD
-		//TODO Méthode à completer
-		//GIVEN
-
-		//WHEN
-
-		//THEN
-		this.mockMvc.perform(put("/medicalRecord"))
-		.andExpect(status().isOk());
-	}
-
-	//-------------------------------------DELETE REQUEST-------------------------------------------
-
-	/**
-	 * Test to verify @DeleteMapping /person
-	 * @throws Exception
-	 */
-	@Test
-	public void  testShouldDeleteASpecificPersonOfTheJsonListOfPersons() throws Exception{
-		//TODO Méthode à completer
-		//GIVEN
-
-		//WHEN
-
-		//THEN
-		this.mockMvc.perform(delete("/person"))
-		.andExpect(status().isOk());
-	}
-
-	/**
-	 * Test to verify @DeleteMapping /firestation
-	 * @throws Exception
-	 */
-	@Test
-	public void testShouldDeleteMappingOfAFirestationOrOfAnAddress() throws Exception{
-		//TODO Méthode à completer
-		//GIVEN
-
-		//WHEN
-
-		//THEN
-		this.mockMvc.perform(delete("/firestation"))
-		.andExpect(status().isOk());
-	}
-
-	/**
-	 * Test to verify @DeleteMapping /medicalRecord
-	 * @throws Exception
-	 */
-	@Test
-	public void testShouldDeleteMedicalRecordOfASpecificPerson() throws Exception{
-		//TODO Méthode à completer
-		//GIVEN
-
-		//WHEN
-
-		//THEN
-		this.mockMvc.perform(delete("/medicalRecord"))
-		.andExpect(status().isOk());
-	}
-=======
 		
 		//GIVEN
 		String firstName = "Jane";
@@ -946,5 +713,4 @@ public void testShouldDeleteMedicalRecordOfASpecificPerson() throws Exception{
 	assert(argumentCaptorFirstName.getValue().compareTo(firstName)==0);
 	assert(argumentCaptorLastName.getValue().compareTo(lastName)==0);
 }
->>>>>>> feature/Tests
 }

@@ -1,38 +1,25 @@
-package com.safetynetalert.alert.repository;
+package com.safetyNetAlert.Alert.repository;
 
-<<<<<<< HEAD
-
-import java.io.IOException;
-=======
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
->>>>>>> feature/Tests
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-<<<<<<< HEAD
-
-import com.safetynetalert.alert.model.Address;
-import com.safetynetalert.alert.model.MedicalRecord;
-import com.safetynetalert.alert.model.Person;
-import com.safetynetalert.alert.repository.RecoveryOfJsonDataInJavaObject;
-=======
 import org.springframework.util.ResourceUtils;
 
 import com.jsoniter.JsonIterator;
 import com.safetynetalert.alert.model.Address;
-import com.safetynetalert.alert.model.FireStation;
 import com.safetynetalert.alert.model.MedicalRecord;
 import com.safetynetalert.alert.model.Person;
+import com.safetynetalert.alert.repository.DescriptionOfUncleanJavaObjects;
+import com.safetynetalert.alert.repository.RecoveryOfJsonDataInJavaObject;
 import com.safetynetalert.alert.repository.entities.FirestationsEntity;
 import com.safetynetalert.alert.repository.entities.MedicalRecordsEntity;
 import com.safetynetalert.alert.repository.entities.PersonsEntity;
->>>>>>> feature/Tests
 
 @WebMvcTest(RecoveryOfJsonDataInJavaObjectTest.class)
 public class RecoveryOfJsonDataInJavaObjectTest {
@@ -45,20 +32,9 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 	public void setUp() throws IOException {
 		RecoveryOfJsonDataInJavaObject repository = RecoveryOfJsonDataInJavaObject.getInstance();
 		repository.initialize();
-<<<<<<< HEAD
-	}
-	/**
-	 * clean the list after each Test
-	 */
-	@AfterEach
-	public void tearDown(){
-		List<Person> result = RecoveryOfJsonDataInJavaObject.getInstance().getPersons();
-		result.clear();
-=======
 		assert(repository.getPersons().size() == 23);
 		assert(repository.getFirestations().size() == 13);
 		assert(repository.getMedicalrecords().size() == 23);
->>>>>>> feature/Tests
 	}
 
 	/**
@@ -85,8 +61,6 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 
 		return personToAdd;	
 	}
-<<<<<<< HEAD
-=======
 
 	private Person getPersonByFirstNameAndLastName(String firstName, String lastName)
 	{
@@ -101,19 +75,11 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 		return null;
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify initialization of the list
 	 */
 	@Test
 	public void initializeTest() {
-<<<<<<< HEAD
-		//TODO Methode à compléter
-	}
-
-	//--------------------------------------Person----------------------------------------------------
-	
-=======
 
 		try {
 			// initialize loads the json file into memory
@@ -169,7 +135,6 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 
 	//--------------------------------------Person----------------------------------------------------
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify an addition of a new person in the list
 	 * @throws Exception
@@ -200,9 +165,6 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 	 */
 	@Test
 	public void updatePersonTest()throws Exception{
-<<<<<<< HEAD
-		//TODO methode à compléter
-=======
 
 		//GIVEN
 		String firstName = "John";
@@ -317,7 +279,6 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 				assert(person.getMedicalRecord().getMedication().containsAll(Arrays.asList("ibupurin:200mg", "hydrapermazol:400mg")));
 			}
 		}
->>>>>>> feature/Tests
 	}
 
 	/**
@@ -341,21 +302,12 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 	}
 
 	//---------------------------------------Firestation----------------------------------------------
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify an addition of a mapping of a firestation
 	 */
 	@Test
 	public void addMappingTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-=======
 
 		//GIVEN
 		int firestationId = 5;
@@ -375,17 +327,11 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 	}
 
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify the modification of a mapping of a firestation for a specific address 
 	 */
 	@Test
 	public void updateMappingTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-=======
 
 		//GIVEN
 		int oldFirestationId = 3;
@@ -406,17 +352,11 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 	}
 
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify the deletion of a mapping of a firestation 
 	 */
 	@Test
 	public void deleteMappingOfAFirestationTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-=======
 
 		//GIVEN
 		int firestationId = 3;
@@ -431,19 +371,11 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 		assert(persons.get(21).getAddress().getFireStationIds().isEmpty());
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify the deletion of a mapping of a specific address
 	 */
 	@Test
 	public void deleteMappingOfAnAddressTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-	//---------------------------------------MedicalRecord--------------------------------------------
-	
-=======
 
 		//GIVEN
 		String address = "748 Townings Dr";
@@ -459,17 +391,11 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 
 	//---------------------------------------MedicalRecord--------------------------------------------
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify an addition of a medical record of a specific person
 	 */
 	@Test
 	public void addMedicalRecordForASpecificPersonTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-=======
 
 		//GIVEN
 		int personId=10; 
@@ -486,17 +412,11 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 		assert(persons.get(10).getMedicalRecord().getAllergies().containsAll(Arrays.asList("Oyster")));
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify the modification of the medical record for a specific person 
 	 */
 	@Test
 	public void updateMedicalRecordForASpecificPersonTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-=======
 
 		//GIVEN
 		String firstName = "Tony";
@@ -520,15 +440,11 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 		}
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify the deletion of the medical record for a specific person
 	 */
 	@Test
 	public void deleteMedicalRecordForASpecificPersonTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-=======
 
 		//GIVEN
 		String firstName = "Tony";
@@ -541,6 +457,5 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 		List<Person> persons = RecoveryOfJsonDataInJavaObject.getInstance().getPersons();
 		assert(persons.get(9).getMedicalRecord().getMedication()== null || persons.get(9).getMedicalRecord().getMedication().isEmpty());
 		assert(persons.get(9).getMedicalRecord().getAllergies()== null || persons.get(9).getMedicalRecord().getMedication().isEmpty());
->>>>>>> feature/Tests
 	}
 }

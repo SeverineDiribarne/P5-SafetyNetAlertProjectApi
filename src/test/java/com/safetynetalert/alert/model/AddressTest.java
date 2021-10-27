@@ -1,18 +1,14 @@
-package com.safetynetalert.alert.model;
+package com.safetyNetAlert.Alert.model;
 
-<<<<<<< HEAD
-=======
 import java.util.ArrayList;
 import java.util.List;
 
->>>>>>> feature/Tests
 import org.junit.jupiter.api.Test;
+
+import com.safetynetalert.alert.model.Address;
 
 public class AddressTest {
 
-<<<<<<< HEAD
-	Address address = new Address();
-=======
 	/**
 	 * Creation New Address
 	 * @return address
@@ -22,24 +18,11 @@ public class AddressTest {
 		return address;
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to add a firestationId
 	 */
 	@Test
 	public void TestToAddAFirestationId() {
-<<<<<<< HEAD
-		//TODO Methode a rectifier nullPointerException : La liste fireStationIds est nulle
-		
-		//GIVEN
-		int firestationId = 6;
-		//WHEN
-		address.addFirestationId(firestationId);
-		//THEN
-		assert(address.getFireStationIds().contains(6));
-	}
-	
-=======
 
 		//GIVEN
 		Address address = creationNewAddress();
@@ -56,25 +39,12 @@ public class AddressTest {
 		assert(address.getFireStationIds().get(2).compareTo(6) == 0);
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to remove a firestationId
 	 * @param firestationId
 	 */
 	@Test
 	public void TestToRemoveAFirestationId() {
-<<<<<<< HEAD
-		//TODO Method to complete
-
-		//GIVEN
-		
-		//WHEN
-		
-		//THEN
-		
-	}
-	
-=======
 
 		//GIVEN
 		Address address = creationNewAddress();
@@ -91,24 +61,11 @@ public class AddressTest {
 		assert(!address.getFireStationIds().contains(firestationId));
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to update a firestationId
 	 */
 	@Test
 	public void TestToUpdateAFirestationId() {
-<<<<<<< HEAD
-		//TODO Method to complete
-
-		//GIVEN
-		
-		//WHEN
-		
-		//THEN
-		
-	}
-	
-=======
 
 		//GIVEN
 		Address address = creationNewAddress();
@@ -127,24 +84,11 @@ public class AddressTest {
 
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to remove all firestationIds
 	 */
 	@Test
 	public void TestToRemoveAllFirestationIds() {
-<<<<<<< HEAD
-		//TODO Method to complete
-
-		//GIVEN
-		
-		//WHEN
-		
-		//THEN
-		
-	}
-	
-=======
 
 		//GIVEN
 		Address address = creationNewAddress();
@@ -160,24 +104,11 @@ public class AddressTest {
 		assert(address.getFireStationIds().isEmpty());
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify if firestationIds contains a firestationId
 	 */
 	@Test
 	public void TestToVerifyIfFirestationIdsContainsFirestationId() {
-<<<<<<< HEAD
-		//TODO Method to complete
-
-		//GIVEN
-		
-		//WHEN
-		
-		//THEN
-		
-	}
-	
-=======
 		
 		//GIVEN
 		Address address = creationNewAddress();
@@ -194,22 +125,11 @@ public class AddressTest {
 		assert(address.getFireStationIds().contains(2));
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify if FirestationIds is equals to a firestationId
 	 */
 	@Test
 	public void TestToVerifyIfFirestationIdsEqualsFirestationId() {
-<<<<<<< HEAD
-		//TODO Method to complete
-
-		//GIVEN
-		
-		//WHEN
-		
-		//THEN
-		
-=======
 
 		//GIVEN
 				Address address = creationNewAddress();
@@ -224,6 +144,5 @@ public class AddressTest {
 
 				//THEN
 				assert(address.getFireStationIds().equals(addToTheList));
->>>>>>> feature/Tests
 	}
 }

@@ -1,11 +1,8 @@
-package com.safetynetalert.alert.model;
+package com.safetyNetAlert.Alert.model;
 
-<<<<<<< HEAD
-import java.util.Arrays;
-
-=======
->>>>>>> feature/Tests
 import org.junit.jupiter.api.Test;
+
+import com.safetynetalert.alert.model.Person;
 
 public class PersonTest {
 

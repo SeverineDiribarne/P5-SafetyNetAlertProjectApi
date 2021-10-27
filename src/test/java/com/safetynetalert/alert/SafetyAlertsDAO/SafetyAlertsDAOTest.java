@@ -1,11 +1,10 @@
-package com.safetynetalert.alert.SafetyAlertsDAO;
+package com.safetyNetAlert.Alert.SafetyAlertsDAO;
 
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -34,18 +33,6 @@ public class SafetyAlertsDAOTest {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * clean the list after each Test
-	 */
-	@AfterEach
-	public void tearDown(){
-		List<Person> result = RecoveryOfJsonDataInJavaObject.getInstance().getPersons();
-		result.clear();
-	}
-	
-	/**
-=======
->>>>>>> feature/Tests
 	 * Create a new person for test
 	 * @return Person to add
 	 */
@@ -69,11 +56,7 @@ public class SafetyAlertsDAOTest {
 
 		return personToAdd;	
 	}
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify the existence of people in the list
 	 */
@@ -108,33 +91,15 @@ public class SafetyAlertsDAOTest {
 		assert ( result.get(0).getMedication().equals(Arrays.asList("aznol:350mg","hydrapermazol:100mg")));
 		assert(result.get(0).getAllergies().equals(Arrays.asList("nillacilan")));
 	}
-<<<<<<< HEAD
-	
-	//---------------------------------------Person--------------------------------------------------
-	
-=======
 
 	//---------------------------------------Person--------------------------------------------------
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify an addition of a new person in the list
 	 * @throws Exception
 	 */
 	@Test
 	public void addPersonTest() throws Exception{
-<<<<<<< HEAD
-		//TODO methode à rectifier --> Erreur : status 415 / error msg:null / no content type and no body
-		
-		//GIVEN
-		//adding a new person in the list
-		Person personToAdd = creationANewPerson();
-		
-		//WHEN
-		// add this person in the list
-		safetyAlertDao.addPersons(personToAdd);
-		
-=======
 
 		//GIVEN
 		//adding a new person in the list
@@ -144,7 +109,6 @@ public class SafetyAlertsDAOTest {
 		// add this person in the list
 		safetyAlertDao.addPersons(personToAdd);
 
->>>>>>> feature/Tests
 		//THEN
 		// check the new person in the list
 		List <Person> result = safetyAlertDao.getPersons();
@@ -163,9 +127,6 @@ public class SafetyAlertsDAOTest {
 	 */
 	@Test
 	public void updatePersonTest()throws Exception{
-<<<<<<< HEAD
-		//TODO methode à compléter
-=======
 
 		//GIVEN
 		String firstName = "John";
@@ -194,7 +155,6 @@ public class SafetyAlertsDAOTest {
 		assert(personToUpdate.getPhone().compareTo("480-461-7789")==0);
 		assert(personToUpdate.getMedicalRecord().getAllergies().containsAll(Arrays.asList("seafood" , "gluten")));
 		assert(personToUpdate.getMedicalRecord().getMedication().containsAll(Arrays.asList("Ixprim:250mg" , "Ibuprofene:1000mg")));
->>>>>>> feature/Tests
 	}
 
 	/**
@@ -203,13 +163,6 @@ public class SafetyAlertsDAOTest {
 	 */
 	@Test
 	public void deletePersonTest()throws Exception{
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-
-	//---------------------------------------Firestation---------------------------------------------
-	
-=======
 
 		safetyAlertDao.deletePerson("John", "Boyd");
 
@@ -226,17 +179,11 @@ public class SafetyAlertsDAOTest {
 
 	//---------------------------------------Firestation---------------------------------------------
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify an addition of a mapping of a firestation
 	 */
 	@Test
 	public void addMappingTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-=======
 
 		//GIVEN
 		int firestationId = 5;
@@ -255,17 +202,11 @@ public class SafetyAlertsDAOTest {
 		assert(persons.get(3).getAddress().getStreet().compareTo(address)==0);
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify the modification of a mapping of a firestation for a specific address 
 	 */
 	@Test
 	public void updateMappingTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-=======
 
 		//GIVEN
 		int oldFirestationId = 3;
@@ -285,17 +226,11 @@ public class SafetyAlertsDAOTest {
 		assert(persons.get(3).getAddress().getStreet().compareTo(address)==0);
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify the deletion of a mapping of a firestation 
 	 */
 	@Test
 	public void deleteMappingOfAFirestationTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-=======
 
 		//GIVEN
 		int firestationId = 3;
@@ -310,19 +245,11 @@ public class SafetyAlertsDAOTest {
 		assert(persons.get(21).getAddress().getFireStationIds().isEmpty());
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify the deletion of a mapping of a specific address
 	 */
 	@Test
 	public void deleteMappingOfAnAddressTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-	//--------------------------------------MedicalRecord--------------------------------------------
-	
-=======
 
 		//GIVEN
 		String address = "748 Townings Dr";
@@ -338,17 +265,11 @@ public class SafetyAlertsDAOTest {
 
 	//--------------------------------------MedicalRecord--------------------------------------------
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify an addition of a medical record of a specific person
 	 */
 	@Test
 	public void addMedicalRecordForASpecificPersonTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-=======
 
 		//GIVEN
 		int personId=10; 
@@ -365,17 +286,11 @@ public class SafetyAlertsDAOTest {
 		assert(persons.get(10).getMedicalRecord().getAllergies().containsAll(Arrays.asList("Oyster")));
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify the modification of the medical record for a specific person 
 	 */
 	@Test
 	public void updateMedicalRecordForASpecificPersonTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-	}
-	
-=======
 
 		//GIVEN
 		String firstName = "Tony";
@@ -399,15 +314,11 @@ public class SafetyAlertsDAOTest {
 		assert(personToUpdate.getMedicalRecord().getAllergies().equals(Arrays.asList("Shellfish")));
 	}
 
->>>>>>> feature/Tests
 	/**
 	 * Test to verify the deletion of the medical record for a specific person
 	 */
 	@Test
 	public void deleteMedicalRecordForASpecificPersonTest() {
-<<<<<<< HEAD
-		//TODO methode à compléter
-=======
 
 		//GIVEN
 		String firstName = "Tony";
@@ -421,6 +332,5 @@ public class SafetyAlertsDAOTest {
 		//THEN
 		assert(persons.get(9).getMedicalRecord().getMedication()== null || persons.get(9).getMedicalRecord().getMedication().isEmpty());
 		assert(persons.get(9).getMedicalRecord().getAllergies()== null || persons.get(9).getMedicalRecord().getMedication().isEmpty());
->>>>>>> feature/Tests
 	}
 }
