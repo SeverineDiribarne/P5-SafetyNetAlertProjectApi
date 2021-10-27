@@ -21,14 +21,6 @@ public class DescriptionOfUncleanJavaObjects {
 	}
 
 	/**
-	 * setter persons entity
-	 * @param persons
-	 */
-	public void setPersonsEntities(List<PersonsEntity> persons) {
-		this.persons = persons;
-	}
-
-	/**
 	 * getter firestations entity 
 	 * @return this firestations
 	 */
@@ -37,26 +29,10 @@ public class DescriptionOfUncleanJavaObjects {
 	}
 
 	/**
-	 * Setter firestations entity
-	 * @param firestations
-	 */
-	public void setFireStationsEntities(List<FirestationsEntity> firestations) {
-		this.firestations = firestations;
-	}
-
-	/**
 	 * getter medicalrecords entity
 	 * @return this medicalrecords
 	 */
 	public List<MedicalRecordsEntity> getMedicalrecords() {
 		return this.medicalrecords;
-	}
-
-	/**
-	 * setter medicalrecords entity
-	 * @param medicalrecords
-	 */
-	public void setMedicalrecordsEntities(List<MedicalRecordsEntity> medicalrecords) {
-		this.medicalrecords = medicalrecords;
 	}
 }
