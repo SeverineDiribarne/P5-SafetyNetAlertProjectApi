@@ -20,27 +20,11 @@ public class MedicalRecordsEntity {
 	}
 
 	/**
-	 * Setter firstName
-	 * @param firstName
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	/**
 	 * Getter lastName
 	 * @return this lastName
 	 */
 	public String getLastName() {
 		return this.lastName;
-	}
-
-	/**
-	 * Setter lastName
-	 * @param lastName
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	/**
@@ -52,14 +36,6 @@ public class MedicalRecordsEntity {
 	}
 
 	/**
-	 * Setter birthDate
-	 * @param birthdate
-	 */
-	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
-	}
-
-	/**
 	 * Getter medications
 	 * @return this.medications
 	 */
@@ -68,26 +44,10 @@ public class MedicalRecordsEntity {
 	}
 
 	/**
-	 * Setter medications
-	 * @param medications
-	 */
-	public void setMedications(List<String> medications) {
-		this.medications = medications;
-	}
-
-	/**
 	 * getter allergies
 	 * @return this allergies
 	 */
 	public List<String> getAllergies() {
 		return this.allergies;
-	}
-
-	/**
-	 * Setter allergies
-	 * @param allergies
-	 */
-	public void setAllergies(List<String> allergies) {
-		this.allergies = allergies;
 	}
 }

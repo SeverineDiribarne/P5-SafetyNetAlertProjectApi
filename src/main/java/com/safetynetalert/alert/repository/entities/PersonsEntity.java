@@ -20,27 +20,11 @@ public class PersonsEntity {
 	}
 
 	/**
-	 * Setter firstName
-	 * @param firstName
-	 */
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	/**
 	 * Getter lastName
 	 * @return this lastName
 	 */
 	public String getLastName() {
 		return this.lastName;
-	}
-
-	/**
-	 * Setter lastName
-	 * @param lastName
-	 */
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
 	}
 
 	/**
@@ -52,27 +36,11 @@ public class PersonsEntity {
 	}
 
 	/**
-	 * Setter address
-	 * @param address
-	 */
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	/**
 	 * Getter city
 	 * @return this city
 	 */
 	public String getCity() {
 		return this.city;
-	}
-
-	/**
-	 * Setter city
-	 * @param city
-	 */
-	public void setCity(String city) {
-		this.city = city;
 	}
 
 	/**
@@ -84,14 +52,6 @@ public class PersonsEntity {
 	}
 
 	/**
-	 * Setter zip
-	 * @param zip
-	 */
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
-
-	/**
 	 * Getter phone
 	 * @return this phone
 	 */
@@ -100,26 +60,10 @@ public class PersonsEntity {
 	}
 
 	/**
-	 * Setter phone
-	 * @param phone
-	 */
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	/**
 	 * Getter email
 	 * @return this email
 	 */
 	public String getEmail() {
 		return this.email;
-	}
-
-	/**
-	 * Setter email
-	 * @param email
-	 */
-	public void setEmail(String email) {
-		this.email = email;
 	}
 }
