@@ -207,7 +207,42 @@ public class RecoveryOfJsonDataInJavaObjectTest {
 			}	
 		}
 	}
+	/**
+	 * Test to verify the modification of information of a person in the list
+	 * @throws Exception
+	 */
+	@Test
+	public void updateBadPersonTest()throws Exception{
 
+		//GIVEN
+		String firstName = "Jane";
+		String lastName = "Doe";
+		Person personBody = new Person();
+
+		Address addressBody = new Address();
+		addressBody.setStreet("19 Altavista St"); 
+		addressBody.setCity("Bordeaux");
+		addressBody.setZip("33000");
+		addressBody.setFireStationIds(Arrays.asList(6, 7));
+		personBody.setAddress(addressBody);
+		personBody.setPhone("492-642-8952");
+		personBody.setEmail("jane.doe@gmail.com");
+		personBody.setBirthDate("12/10/1992");
+		MedicalRecord medicalRecordBody = new MedicalRecord();
+		medicalRecordBody.setMedication(Arrays.asList("paracetamol:1000mg"));
+		medicalRecordBody.setAllergies(Arrays.asList("Lactose"));
+		personBody.setMedicalRecord(medicalRecordBody);
+
+		//THEN
+		List<Person> personsBeforeTest = RecoveryOfJsonDataInJavaObject.getInstance().getPersons();
+
+		RecoveryOfJsonDataInJavaObject.getInstance().updatePerson(firstName, lastName, personBody);
+
+		//WHEN
+		List<Person> personsAfterTest = RecoveryOfJsonDataInJavaObject.getInstance().getPersons();
+			assert(personsBeforeTest.equals(personsAfterTest));
+			
+	}
 	/**
 	 * Test to verify the modification of information of a person in the list
 	 * @throws Exception
