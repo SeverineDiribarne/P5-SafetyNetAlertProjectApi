@@ -21,10 +21,8 @@ public class FireStation {
 		this.stationId = stationId;
 	}
 
-	/**
-	 * ToString method
-	 */
+	@Override
 	public String toString() {
-		return "  StationId : " + getStationId();
+		return "FireStation [stationId=" + stationId + "]";
 	}
 }

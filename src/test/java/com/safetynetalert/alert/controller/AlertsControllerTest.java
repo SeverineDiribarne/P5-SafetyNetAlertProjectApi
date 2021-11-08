@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -42,6 +44,8 @@ public class AlertsControllerTest {
 
 	@MockBean
 	private SafetyAlertsDAO safetyAlertsDAO;
+	
+	private final static Logger log = LogManager.getLogger(); 
 
 	/**
 	 * Initialize the json list before each test
@@ -179,12 +183,13 @@ public class AlertsControllerTest {
 		}
 		catch(JsonMappingException mappingException)
 		{
-			System.err.println(mappingException.getMessage());
+			log.error("Erreur de mappage Json : ", mappingException.getMessage());
 			assert(false);
 		}
 		catch(JsonProcessingException processingException)
 		{
 			System.err.println(processingException.getMessage());
+			log.error("Erreur de traitement :  ", processingException.getMessage());
 			assert(false);
 		}
 	}
@@ -215,7 +220,8 @@ public class AlertsControllerTest {
 		}
 		catch(JsonMappingException mappingException)
 		{
-			System.err.println(mappingException.getMessage());
+			
+			log.error("Erreur de mappage Json : ", mappingException.getMessage());
 			assert(false);
 		}
 		catch(JsonProcessingException processingException)
@@ -251,7 +257,7 @@ public class AlertsControllerTest {
 		}
 		catch(JsonMappingException mappingException)
 		{
-			System.err.println(mappingException.getMessage());
+			log.error("Erreur de mappage Json : ", mappingException.getMessage());
 			assert(false);
 		}
 		catch(JsonProcessingException processingException)
@@ -287,7 +293,7 @@ public class AlertsControllerTest {
 		}
 		catch(JsonMappingException mappingException)
 		{
-			System.err.println(mappingException.getMessage());
+			log.error("Erreur de mappage Json : ", mappingException.getMessage());
 			assert(false);
 		}
 		catch(JsonProcessingException processingException)
@@ -322,7 +328,7 @@ public class AlertsControllerTest {
 		}
 		catch(JsonMappingException mappingException)
 		{
-			System.err.println(mappingException.getMessage());
+			log.error("Erreur de mappage Json : ", mappingException.getMessage());
 			assert(false);
 		}
 		catch(JsonProcessingException processingException)
@@ -359,7 +365,7 @@ public class AlertsControllerTest {
 		}
 		catch(JsonMappingException mappingException)
 		{
-			System.err.println(mappingException.getMessage());
+			log.error("Erreur de mappage Json : ", mappingException.getMessage());
 			assert(false);
 		}
 		catch(JsonProcessingException processingException)
@@ -395,7 +401,7 @@ public class AlertsControllerTest {
 		}
 		catch(JsonMappingException mappingException)
 		{
-			System.err.println(mappingException.getMessage());
+			log.error("Erreur de mappage Json : ", mappingException.getMessage());
 			assert(false);
 		}
 		catch(JsonProcessingException processingException)

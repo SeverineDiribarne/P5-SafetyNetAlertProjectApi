@@ -133,17 +133,10 @@ public class Address {
 		}
 		return elementfound;
 	}
-	//	/**
-	//	 * ToString method
-	//	 */
-	//	public String toString() {
-	//		return "   Street : " + getStreet() + 
-	//				"  City : " + getCity() + 
-	//				"  Zip Code : " + getZip(); 
-	//				for(FireStation firestationId : FirestationIds ) {
-	//					" FirestationIds : "
-	//				}
-	//				  
-	//	}
 
+	@Override
+	public String toString() {
+		return "Address [street=" + street + ", city=" + city + ", zip=" + zip + ", fireStationIds=" + fireStationIds
+				+ "]";
+	}
 }

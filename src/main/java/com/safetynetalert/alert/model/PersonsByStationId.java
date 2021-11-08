@@ -56,4 +56,11 @@ public class PersonsByStationId {
 	public void setNumberOfChild(int numberOfChild) {
 		this.numberOfChild = numberOfChild;
 	}
+
+	@Override
+	public String toString() {
+		return "PersonsByStationId [persons=" + persons + ", numberOfAdults=" + numberOfAdults + ", numberOfChild="
+				+ numberOfChild + "]";
+	}
+	
 }

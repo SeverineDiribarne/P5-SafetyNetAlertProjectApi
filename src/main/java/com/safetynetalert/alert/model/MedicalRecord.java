@@ -40,11 +40,8 @@ public class MedicalRecord {
 		this.allergies = allergies;
 	}
 
-	/**
-	 * ToString method
-	 */
+	@Override
 	public String toString() {
-		return "  Medications : " + getMedication() + 
-				"  Allergies : " + getAllergies();
+		return "MedicalRecord [medication=" + medication + ", allergies=" + allergies + "]";
 	}
 }

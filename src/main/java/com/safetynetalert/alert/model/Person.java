@@ -169,17 +169,11 @@ public class Person {
 		LocalDate birthdayDate = LocalDate.parse(birthday, formatter);
 		return ChronoUnit.YEARS.between(birthdayDate, actualDate);
 	}
-	
-	/**
-	 * ToString method
-	 */
+
+	@Override
 	public String toString() {
-		return "  Id : " + getId() + 
-				"  FirstName : " + getFirstName() + 
-				"  LastName : " + getLastName() + 
-				"  Address : " + getAddress().toString() +
-				"  BirthDate : " + getBirthDate() + 
-				"  Email : " + getEmail() + 
-				"  Phone : " + getPhone();
+		return "Person [id=" + id + ", lastName=" + lastName + ", firstName=" + firstName + ", address=" + address
+				+ ", phone=" + phone + ", email=" + email + ", birthDate=" + birthDate + ", medicalRecord="
+				+ medicalRecord + "]";
 	}
 }

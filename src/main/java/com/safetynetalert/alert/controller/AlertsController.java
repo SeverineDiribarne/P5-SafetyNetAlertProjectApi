@@ -2,6 +2,9 @@ package com.safetynetalert.alert.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,15 +25,20 @@ public class AlertsController {
 	//Attribute
 	@Autowired
 	private SafetyAlertsDAO safetyAlertsDao;
+	
+	private static final Logger log = LogManager.getLogger(); 
+	private static final String reply = "Reply sent : {}";
 
 	/**
-	 * Get persons list covered by the firestation
+	 * Get persons list covered by the fireStation
 	 * @param stationNumber
-	 * @return persons list with lastname, firstname, address, phone number,
+	 * @return persons list with lastName, firstName, address, phone number,
 	 *  number of adults and number of children
 	 */
 	@GetMapping("/firestation")
 	public PersonsByStationId getPersonsListCoveredByTheFireStation(@RequestParam Integer stationNumber) {
+		log.info("Request received with input parameter: stationNumber {}", stationNumber);
+
 		List<Person> result = new ArrayList<>();
 		int numberOfAdults = 0;
 		int numberOfChild = 0;
@@ -49,6 +57,7 @@ public class AlertsController {
 		personsByStationId.setPersons(result);
 		personsByStationId.setNumberOfAdults(numberOfAdults);
 		personsByStationId.setNumberOfChild(numberOfChild);
+		log.info(reply, personsByStationId);
 		return personsByStationId;
 	}
 
@@ -60,6 +69,8 @@ public class AlertsController {
 	 */
 	@GetMapping({"/childAlert"})
 	public List<Person> getTheListOfChildrenLivingAtTheAddress(@RequestParam String address) {
+		log.info("Request received with input parameter: address {}", address);
+
 		List<Person> result = new ArrayList<>();
 		for (Person person : this.safetyAlertsDao.getPersons()) {
 			long age = person.ageCalculation();
@@ -67,6 +78,7 @@ public class AlertsController {
 				result.add(person);  
 			}
 		}
+		log.info(reply, result);
 		return result;
 	}
 
@@ -78,11 +90,13 @@ public class AlertsController {
 	@GetMapping({"/phoneAlert"})
 	public List<String> getThePhoneNumberListOfPeopleCoveredByTheFireStation
 	(@RequestParam Integer firestation) {
+		log.info("Request received with input parameter: firestation {}", firestation);
 		List<String> result = new ArrayList<>();
 		for (Person person : this.safetyAlertsDao.getPersons()) {
 			if (person.getAddress().containsFirestationId(firestation))
 				result.add(person.getPhone()); 
 		} 
+		log.info(reply, result);
 		return result;
 	}
 
@@ -94,11 +108,13 @@ public class AlertsController {
 	@GetMapping({"/fire"})
 	public List<Person> getTheListOfPeopleLivingAtTheAddressAsWellAsTheFirestationServingIt
 	(@RequestParam String address) {
+		log.info("Request received with input parameter: address {}", address);
 		List<Person> result = new ArrayList<>();
 		for (Person person : this.safetyAlertsDao.getPersons()) {
 			if (person.getAddress().getStreet().contains(address))
 				result.add(person); 
 		} 
+		log.info(reply, result);
 		return result;
 	}
 
@@ -109,12 +125,14 @@ public class AlertsController {
 	 */
 	@GetMapping({"/flood/stations"})
 	public List<Person> getTheListOfHomesServedByTheFirestation(@RequestParam List<Integer> stations) {
+		log.info("Request received with input parameter: stations {}", stations);
 		List<Person> result = new ArrayList<>();
 		for (Person person : this.safetyAlertsDao.getPersons()) {
 			if (person.getAddress().equalsFirestationId(stations)) {
 				result.add(person); 
 			}
 		} 
+		log.info(reply, result);
 		return result;
 	}
 
@@ -127,11 +145,13 @@ public class AlertsController {
 	@GetMapping({"/personInfo"})
 	public Person getTheListOfEachInhabitantsSortedByName(@RequestParam String firstName,
 			@RequestParam String lastName) {
+		log.info("Request received with input parameters: firstName {}, lastName {}", firstName , lastName);
 		Person result = null;
 		for (Person person : this.safetyAlertsDao.getPersons()) {
 			if (person.getLastName().equals(lastName) && person.getFirstName().equals(firstName))
 				result = person; 
 		} 
+		log.info(reply, result);
 		return result;
 	}
 	/**
@@ -141,9 +161,13 @@ public class AlertsController {
 	 */
 	@GetMapping({"/communityEmail"})
 	public List<String> getTheEmailListOfAllTheInhabitantsOfTheCity(@RequestParam String city) {
+		log.info("Request received with input parameter: city {}", city );
 		List<String> result = new ArrayList<>();
-		for (Person person : this.safetyAlertsDao.getPersons())
+		for (Person person : this.safetyAlertsDao.getPersons()) 
+		{
 			result.add(person.getEmail()); 
+		}
+		log.info(reply, result);
 		return result;
 	}
 
@@ -156,7 +180,16 @@ public class AlertsController {
 	 */
 	@PostMapping(value = "/person")
 	public void createNewPerson(@RequestBody Person person) {
-		 safetyAlertsDao.addPersons(person);
+		log.info("Request to add a person with request body: person {}", person );
+		boolean result = safetyAlertsDao.addPersons(person);
+		if( result )
+		{
+			log.info("Answer sent: The person has been added.");
+		}
+		else
+		{
+			log.info("Answer sent: The person could not be added.");
+		}
 	}
 
 	/**
@@ -166,7 +199,16 @@ public class AlertsController {
 	@PutMapping("/person")
 	public void updatePerson(@RequestParam("firstName") String firstName, 
 			@RequestParam("lastName") String lastName, @RequestBody Person person) {
-		safetyAlertsDao.updatePerson(firstName, lastName, person);
+		log.info("Person modification request with input parameters: firstName {}, lastName {}, and request body: person {}", firstName, lastName, person );
+		boolean result = safetyAlertsDao.updatePerson(firstName, lastName, person);
+		if( result )
+		{
+			log.info("Answer sent: The person has been updated by firstName and lastName.");
+		}
+		else
+		{
+			log.info("Answer sent: The person could not be updated by firstName and lastName.");
+		}
 	}
 
 	/**
@@ -176,7 +218,16 @@ public class AlertsController {
 	@DeleteMapping ("/person")
 	public void deletePerson(@RequestParam("firstName") String firstName, 
 			@RequestParam("lastName") String lastName) {
-		safetyAlertsDao.deletePerson(firstName, lastName);
+		log.info("Request to delete a person with input parameters: firstName {}, lastName {}", firstName, lastName);
+		boolean result = safetyAlertsDao.deletePerson(firstName, lastName);
+		if( result )
+		{
+			log.info("Answer sent: The person has been deleted by firstName and lastName.");
+		}
+		else
+		{
+			log.info("Answer sent: The person could not be deleted by firstName and lastName.");
+		}
 	}
 
 	//------------------------------------"/firestation"----------------------------------------
@@ -188,7 +239,16 @@ public class AlertsController {
 	 */
 	@PostMapping("/firestation")
 	public void addAMappingFireStationIdWithAnAddress(@RequestParam Integer firestationId, @RequestParam String address ) {
-		safetyAlertsDao.addMapping(firestationId, address);
+		log.info("Request to add a mapping with input parameters: firestationId {}, address {}", firestationId, address);
+		boolean result = safetyAlertsDao.addMapping(firestationId, address);
+		if( result )
+		{
+			log.info("Answer sent: The mapping has been added.");
+		}
+		else
+		{
+			log.info("Answer sent: The mapping could not be added.");
+		}
 	}
 
 	/**
@@ -197,8 +257,16 @@ public class AlertsController {
 	 */
 	@PutMapping("/firestation")
 	public void updateTheFireStationNumberBasedOnAnAddress(@RequestParam Integer oldFirestationId, @RequestParam Integer newFirestationId, @RequestParam String address) {
-		safetyAlertsDao.updateFirestationNumber(oldFirestationId, newFirestationId, address);
-
+		log.info("Request to modify a mapping with input parameters: oldFirestationId {}, newFirestationId {}, address {}", oldFirestationId, newFirestationId, address);
+		boolean result = safetyAlertsDao.updateFirestationNumber(oldFirestationId, newFirestationId, address);
+		if( result )
+		{
+			log.info("Answer sent: The fireStationId has been updated.");
+		}
+		else
+		{
+			log.info("Answer sent: The fireStationId could not be updated.");
+		}
 	}
 
 	/**
@@ -208,13 +276,30 @@ public class AlertsController {
 	 */
 	@DeleteMapping("/firestation")
 	public void deleteTheMappingByFirestationIdOrByAddress(@RequestParam(required = false) Integer firestationId, @RequestParam(required = false) String address) {
+		log.info("Request to delete a mapping with parameters (not required) as input: firestationId {}, address {}", firestationId, address);
 		//Delete the mapping by fireStationId
 		if(firestationId != null) {
-			safetyAlertsDao.deleteMappingByFirestationId(firestationId);
+			boolean result = safetyAlertsDao.deleteMappingByFirestationId(firestationId);
+			if( result )
+			{
+				log.info("Answer sent: The mapping has been deleted by firestationId.");
+			}
+			else
+			{
+				log.info("Answer sent: The medical file could not be deleted by firestationId.");
+			}
 		}
 		//Delete the mapping by address
 		if(address != null) {
-			safetyAlertsDao.deleteMappingByAddress(address);
+			boolean result = safetyAlertsDao.deleteMappingByAddress(address);
+			if( result )
+			{
+				log.info("Answer sent: The mapping has been deleted by address.");
+			}
+			else
+			{
+				log.info("Answer sent: The mapping could not be deleted by address.");
+			}
 		}
 	}
 
@@ -226,8 +311,17 @@ public class AlertsController {
 	 * @return medicalRecord
 	 */
 	@PostMapping("/medicalRecord")
-	public void addAMedicalRecord(@RequestParam int personId,@RequestBody MedicalRecord medicalRecord ) {
-		 safetyAlertsDao.addMedicalRecord(personId, medicalRecord );
+	public void addAMedicalRecord(@RequestParam int personId, @RequestBody MedicalRecord medicalRecord ) {
+		log.info("Request to add a medical record to a person with input parameter: personId {}, and request body: medicalRecord {}", personId, medicalRecord);
+		boolean result = safetyAlertsDao.addMedicalRecord(personId, medicalRecord );
+		if( result )
+		{
+			log.info("Answer sent: The medical file has been added to the requested person.");
+		}
+		else
+		{
+			log.info("Answer sent: The medical file could not be added to the requested person.");
+		}
 	}
 	/**
 	 * Update an existing MedicalRecord of a specific person 
@@ -238,7 +332,16 @@ public class AlertsController {
 	@PutMapping("/medicalRecord")
 	public void updateAnExistingMedicalRecord(@RequestParam("firstName") String firstName,
 			@RequestParam("lastName") String lastName,@RequestBody Person person) {
-		safetyAlertsDao.updateMedicalRecord(firstName, lastName, person);
+		log.info("Change request with input parameters: firstName {}, lastName {}, and request body: person {}", firstName, lastName, person);
+		boolean result = safetyAlertsDao.updateMedicalRecord(firstName, lastName, person);
+		if( result )
+		{
+			log.info("Answer sent: The medical file has been updated to the requested person.");
+		}
+		else
+		{
+			log.info("Answer sent: The medical file could not be updated to the requested person.");
+		}
 	}
 
 	/**
@@ -249,6 +352,15 @@ public class AlertsController {
 	@DeleteMapping("/medicalRecord")
 	public void deleteAPersonSMedicalRecord(@RequestParam("firstName") String firstName, 
 			@RequestParam("lastName") String lastName) {
-		safetyAlertsDao.deleteMedicalRecord(firstName, lastName);
+		log.info("Delete request with input parameters: firstName {}, lastName {}", firstName, lastName);
+		boolean result = safetyAlertsDao.deleteMedicalRecord(firstName, lastName);
+		if( result )
+		{
+			log.info("Answer sent: The medical file has been deleted to the requested person.");
+		}
+		else
+		{
+			log.info("Answer sent: The medical file could not be deleted to the requested person.");
+		}
 	}
 }
