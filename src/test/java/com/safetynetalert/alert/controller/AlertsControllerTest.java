@@ -1,6 +1,6 @@
 package com.safetyNetAlert.Alert.controller;
 
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -34,7 +34,7 @@ import com.safetynetalert.alert.model.MedicalRecord;
 import com.safetynetalert.alert.model.Person;
 import com.safetynetalert.alert.model.PersonsByStationId;
 import com.safetynetalert.alert.repository.RecoveryOfJsonDataInJavaObject;
-import com.safetynetalert.alert.service.SafetyAlertsDAO;
+import com.safetynetalert.alert.service.SafetyAlertsInMemoryDAO;
 
 @WebMvcTest(AlertsController.class)
 public class AlertsControllerTest {
@@ -43,7 +43,7 @@ public class AlertsControllerTest {
 	private MockMvc mockMvc;
 
 	@MockBean
-	private SafetyAlertsDAO safetyAlertsDAO;
+	private SafetyAlertsInMemoryDAO safetyAlertsDAO;
 	
 	private final static Logger log = LogManager.getLogger(); 
 
@@ -426,7 +426,7 @@ public class AlertsControllerTest {
 
 		//WHEN
 		ArgumentCaptor<Person> valueCapture = ArgumentCaptor.forClass(Person.class);
-		doNothing().when(this.safetyAlertsDAO).addPersons( valueCapture.capture());
+		doReturn(true).when(this.safetyAlertsDAO).addPersons( valueCapture.capture());
 
 		//THEN
 		this.mockMvc.perform(post("/person")
@@ -461,7 +461,7 @@ public class AlertsControllerTest {
 		//WHEN
 		ArgumentCaptor<Integer> argumentCaptorFirestationId = ArgumentCaptor.forClass(Integer.class);
 		ArgumentCaptor<String> argumentCaptorAddress = ArgumentCaptor.forClass(String.class);
-		doNothing().when(this.safetyAlertsDAO).addMapping( argumentCaptorFirestationId.capture(), argumentCaptorAddress.capture());
+		doReturn(true).when(this.safetyAlertsDAO).addMapping( argumentCaptorFirestationId.capture(), argumentCaptorAddress.capture());
 
 		//THEN
 		this.mockMvc.perform(post("/firestation")
@@ -488,7 +488,7 @@ public class AlertsControllerTest {
 		//WHEN
 		ArgumentCaptor<Integer> argumentCaptorPersonId = ArgumentCaptor.forClass(Integer.class);
 		ArgumentCaptor<MedicalRecord> argumentCaptorMedicalRecord = ArgumentCaptor.forClass(MedicalRecord.class);
-		doNothing().when(this.safetyAlertsDAO).addMedicalRecord( argumentCaptorPersonId.capture(), argumentCaptorMedicalRecord.capture());
+		doReturn(true).when(this.safetyAlertsDAO).addMedicalRecord( argumentCaptorPersonId.capture(), argumentCaptorMedicalRecord.capture());
 
 		//THEN
 		this.mockMvc.perform(post("/medicalRecord")
@@ -537,7 +537,7 @@ public class AlertsControllerTest {
 		ArgumentCaptor<String> argumentCaptorFirstName = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<String> argumentCaptorLastName = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<Person> argumentCaptorPersonToUpdate = ArgumentCaptor.forClass(Person.class);
-		doNothing().when(this.safetyAlertsDAO).updatePerson( argumentCaptorFirstName.capture(),
+		doReturn(true).when(this.safetyAlertsDAO).updatePerson( argumentCaptorFirstName.capture(),
 				argumentCaptorLastName.capture(), argumentCaptorPersonToUpdate.capture());
 
 		//THEN
@@ -573,7 +573,7 @@ public class AlertsControllerTest {
 		ArgumentCaptor<Integer> argumentCaptorOldFirestationId = ArgumentCaptor.forClass(Integer.class);
 		ArgumentCaptor<Integer> argumentCaptorNewFirestationId = ArgumentCaptor.forClass(Integer.class);
 		ArgumentCaptor<String> argumentCaptorAddress = ArgumentCaptor.forClass(String.class);
-		doNothing().when(this.safetyAlertsDAO).updateFirestationNumber( argumentCaptorOldFirestationId.capture(),
+		doReturn(true).when(this.safetyAlertsDAO).updateFirestationNumber( argumentCaptorOldFirestationId.capture(),
 				argumentCaptorNewFirestationId.capture(), argumentCaptorAddress.capture());
 
 		//THEN
@@ -615,7 +615,7 @@ public class AlertsControllerTest {
 		ArgumentCaptor<String> argumentCaptorFirstName = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<String> argumentCaptorLastName = ArgumentCaptor.forClass(String.class);
 		ArgumentCaptor<Person> argumentCaptorPersonToUpdate = ArgumentCaptor.forClass(Person.class);
-		doNothing().when(this.safetyAlertsDAO).updateMedicalRecord( argumentCaptorFirstName.capture(),
+		doReturn(true).when(this.safetyAlertsDAO).updateMedicalRecord( argumentCaptorFirstName.capture(),
 				argumentCaptorLastName.capture(), argumentCaptorPersonToUpdate.capture());
 
 		//THEN
@@ -647,7 +647,7 @@ public void  testShouldDeleteASpecificPersonOfTheJsonListOfPersons() throws Exce
 	//WHEN
 	ArgumentCaptor<String> argumentCaptorFirstName = ArgumentCaptor.forClass(String.class);
 	ArgumentCaptor<String> argumentCaptorLastName = ArgumentCaptor.forClass(String.class);
-	doNothing().when(this.safetyAlertsDAO).deletePerson( argumentCaptorFirstName.capture(), argumentCaptorLastName.capture());
+	doReturn(true).when(this.safetyAlertsDAO).deletePerson( argumentCaptorFirstName.capture(), argumentCaptorLastName.capture());
 
 	//THEN
 	this.mockMvc.perform(delete("/person")
@@ -669,7 +669,7 @@ public void testShouldDeleteMappingOfAFirestation() throws Exception{
 	Integer firestationId = 1;
 	//WHEN
 	ArgumentCaptor<Integer> argumentCaptorFirestationId = ArgumentCaptor.forClass(Integer.class);
-	doNothing().when(this.safetyAlertsDAO).deleteMappingByFirestationId( argumentCaptorFirestationId.capture());
+	doReturn(true).when(this.safetyAlertsDAO).deleteMappingByFirestationId( argumentCaptorFirestationId.capture());
 
 	//THEN
 	this.mockMvc.perform(delete("/firestation").param("firestationId", "1"))
@@ -689,7 +689,7 @@ public void testShouldDeleteMappingOfAnAddress() throws Exception{
 
 	//WHEN
 	ArgumentCaptor<String> argumentCaptorAddress = ArgumentCaptor.forClass(String.class);
-	doNothing().when(this.safetyAlertsDAO).deleteMappingByAddress( argumentCaptorAddress.capture());
+	doReturn(true).when(this.safetyAlertsDAO).deleteMappingByAddress( argumentCaptorAddress.capture());
 
 	//THEN
 	this.mockMvc.perform(delete("/firestation").param("address", address))
@@ -711,7 +711,7 @@ public void testShouldDeleteMedicalRecordOfASpecificPerson() throws Exception{
 	//WHEN
 	ArgumentCaptor<String> argumentCaptorFirstName = ArgumentCaptor.forClass(String.class);
 	ArgumentCaptor<String> argumentCaptorLastName = ArgumentCaptor.forClass(String.class);
-	doNothing().when(this.safetyAlertsDAO).deleteMedicalRecord( argumentCaptorFirstName.capture(),argumentCaptorLastName.capture() );
+	doReturn(true).when(this.safetyAlertsDAO).deleteMedicalRecord( argumentCaptorFirstName.capture(),argumentCaptorLastName.capture() );
 
 	//THEN
 	this.mockMvc.perform(delete("/medicalRecord").param("firstName", firstName).param("lastName", lastName))

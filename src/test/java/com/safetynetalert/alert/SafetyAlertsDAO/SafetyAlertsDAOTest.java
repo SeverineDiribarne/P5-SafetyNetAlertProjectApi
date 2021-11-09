@@ -15,12 +15,13 @@ import com.safetynetalert.alert.model.MedicalRecord;
 import com.safetynetalert.alert.model.Person;
 import com.safetynetalert.alert.repository.RecoveryOfJsonDataInJavaObject;
 import com.safetynetalert.alert.service.SafetyAlertsDAO;
+import com.safetynetalert.alert.service.SafetyAlertsInMemoryDAO;
 
 
 @WebMvcTest(SafetyAlertsDAOTest.class)
 public class SafetyAlertsDAOTest {
 
-	SafetyAlertsDAO safetyAlertDao = new SafetyAlertsDAO();
+	SafetyAlertsDAO safetyAlertDao = new SafetyAlertsInMemoryDAO();
 
 	/**
 	 * Initialize the json list before each test

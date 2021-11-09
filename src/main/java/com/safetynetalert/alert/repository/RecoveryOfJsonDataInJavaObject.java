@@ -13,7 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -176,11 +175,12 @@ public class RecoveryOfJsonDataInJavaObject {
 			if (person.getAddress().getStreet().equals(address)) {
 				log.debug(found);
 				personsFound.add(person);
-				return personsFound;
 			}
 		}
-		log.debug(notFound);
-		return Collections.emptyList();
+		if(personsFound.isEmpty()) {
+			log.debug(notFound);
+		}
+		return personsFound;
 
 	}
 
@@ -195,11 +195,13 @@ public class RecoveryOfJsonDataInJavaObject {
 			if(person.getAddress().containsFirestationId(firestationId)) {
 				log.debug(found);
 				personsFound.add(person);
-				return personsFound;
+
 			}
 		}
-		log.debug(notFound);
-		return Collections.emptyList();
+		if(personsFound.isEmpty()) {
+			log.debug(notFound);
+		}
+		return personsFound;
 	}
 
 	//--------------------------------------------/person---------------------------------------------------------------
@@ -211,9 +213,9 @@ public class RecoveryOfJsonDataInJavaObject {
 	 */
 	public boolean addPerson(Person person) {
 		if(person != null) {
-		 persons.add(person);
-		 log.debug(" Return true : the person found is added of the list of persons");
-		 return true;
+			persons.add(person);
+			log.debug(" Return true : the person found is added of the list of persons");
+			return true;
 		}
 		log.debug("Return false : the person found isn't added of the list of persons");
 		return false;
@@ -244,7 +246,7 @@ public class RecoveryOfJsonDataInJavaObject {
 			}
 		}
 	}
-	
+
 	/**
 	 * updated Person informations
 	 * @param person
@@ -264,7 +266,7 @@ public class RecoveryOfJsonDataInJavaObject {
 			personFound.setPhone(person.getPhone());
 		}
 	}
-	
+
 	/**
 	 * update Medical Record
 	 * @param person
@@ -282,7 +284,7 @@ public class RecoveryOfJsonDataInJavaObject {
 			}
 		}
 	}
-	
+
 	/**
 	 * Update a person
 	 * @param person
@@ -330,15 +332,15 @@ public class RecoveryOfJsonDataInJavaObject {
 	public boolean addMapping(Integer firestationId, String address) {
 
 		List<Person> personsFound = getPersonByAddress(address);
-		if(personsFound != null) {
-			for(Person person : personsFound) {
-				person.getAddress().addFirestationId(firestationId);
-			}
-			log.debug("Return true : the mapping is added for each person found");
-			return true;
+		if(personsFound.isEmpty()) {
+			log.debug("Return false : the mapping isn't added for each person found");
+			return false;
 		}
-		log.debug("Return false : the mapping isn't added for each person found");
-		return false;
+		for(Person person : personsFound) {
+			person.getAddress().addFirestationId(firestationId);
+		}
+		log.debug("Return true : the mapping is added for each person found");
+		return true;
 	}
 
 	/**
@@ -348,15 +350,15 @@ public class RecoveryOfJsonDataInJavaObject {
 	 */
 	public boolean updateFirestationNumber(Integer oldfirestationId, Integer newfirestationId, String address) {
 		List<Person> personsFound = getPersonByAddress(address);
-		if(personsFound != null) {
-			for(Person person : personsFound) {
-				person.getAddress().updateFirestationId(oldfirestationId, newfirestationId);
-			}
-			log.debug("Return true : the firestationId is updated for each person found");
-			return true;
+		if(personsFound.isEmpty()) {
+			log.debug("Return false : firestationId isn't updated for each person found");
+			return false;
 		}
-		log.debug("Return false : the firestationId isn't updated for each person found");
-		return false;
+		for(Person person : personsFound) {
+			person.getAddress().updateFirestationId(oldfirestationId, newfirestationId);
+		}
+		log.debug("Return true : the firestationId is updated for each person found");
+		return true;
 	}
 
 	/**
