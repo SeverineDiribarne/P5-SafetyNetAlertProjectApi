@@ -1,5 +1,6 @@
 package com.safetynetalert.alert.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Address {
@@ -9,7 +10,7 @@ public class Address {
 	private String city;
 	private String zip;
 	private List<Integer> fireStationIds;
-
+	
 	/**
 	 * getter street
 	 * @return this street

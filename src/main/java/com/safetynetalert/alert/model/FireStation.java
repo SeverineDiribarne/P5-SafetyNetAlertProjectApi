@@ -1,9 +1,20 @@
 package com.safetynetalert.alert.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FireStation {
 	
 	//Attribute
 	private int stationId;
+	private List<Address> coveredAddress = new ArrayList<>();
+
+	/**
+	 * @return the coveredAddress
+	 */
+	public List<Address> getCoveredAddress() {
+		return coveredAddress;
+	}
 
 	/**
 	 * Getter StationId
@@ -19,6 +30,14 @@ public class FireStation {
 	 */
 	public void setStationId(int stationId) {
 		this.stationId = stationId;
+	}
+	
+	/**
+	 * Add Address
+	 * @param newCoveredAddress
+	 */
+	public void addAddress(Address newCoveredAddress) {
+		coveredAddress.add(newCoveredAddress);
 	}
 
 	@Override

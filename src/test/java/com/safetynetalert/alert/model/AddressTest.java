@@ -3,11 +3,12 @@ package com.safetyNetAlert.Alert.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import com.safetynetalert.alert.model.Address;
 
-public class AddressTest {
+class AddressTest {
 
 	/**
 	 * Creation New Address
@@ -22,11 +23,11 @@ public class AddressTest {
 	 * Test to add a firestationId
 	 */
 	@Test
-	public void TestToAddAFirestationId() {
+	void TestToAddAFirestationId() {
 
 		//GIVEN
 		Address address = creationNewAddress();
-		int firestationId = 6;
+		Integer firestationId = 6;
 		List<Integer>addToTheList = new ArrayList<Integer>();
 		addToTheList.add(1);
 		addToTheList.add(2);
@@ -36,7 +37,7 @@ public class AddressTest {
 		address.addFirestationId(firestationId);
 		
 		//THEN
-		assert(address.getFireStationIds().get(2).compareTo(6) == 0);
+		Assert.assertEquals(address.getFireStationIds().get(2),firestationId);
 	}
 
 	/**
@@ -44,7 +45,7 @@ public class AddressTest {
 	 * @param firestationId
 	 */
 	@Test
-	public void TestToRemoveAFirestationId() {
+	void TestToRemoveAFirestationId() {
 
 		//GIVEN
 		Address address = creationNewAddress();
@@ -58,19 +59,19 @@ public class AddressTest {
 		address.removeFirestationId(firestationId);
 
 		//THEN
-		assert(!address.getFireStationIds().contains(firestationId));
+		Assert.assertTrue(!address.getFireStationIds().contains(firestationId));
 	}
 
 	/**
 	 * Test to update a firestationId
 	 */
 	@Test
-	public void TestToUpdateAFirestationId() {
+	void TestToUpdateAFirestationId() {
 
 		//GIVEN
 		Address address = creationNewAddress();
 		int oldFirestationId = 2;
-		int newFirestationId = 6;
+		Integer newFirestationId = 6;
 		List<Integer>addToTheList = new ArrayList<Integer>();
 		addToTheList.add(1);
 		addToTheList.add(2);
@@ -80,7 +81,7 @@ public class AddressTest {
 		address.updateFirestationId(oldFirestationId, newFirestationId);
 		
 		//THEN
-		assert(address.getFireStationIds().get(1).compareTo(6) == 0);
+		Assert.assertEquals(newFirestationId,address.getFireStationIds().get(1));
 
 	}
 
@@ -88,7 +89,7 @@ public class AddressTest {
 	 * Test to remove all firestationIds
 	 */
 	@Test
-	public void TestToRemoveAllFirestationIds() {
+	void TestToRemoveAllFirestationIds() {
 
 		//GIVEN
 		Address address = creationNewAddress();
@@ -101,18 +102,18 @@ public class AddressTest {
 		address.removeAllFirestationIds();
 
 		//THEN
-		assert(address.getFireStationIds().isEmpty());
+		Assert.assertTrue(address.getFireStationIds().isEmpty());
 	}
 
 	/**
 	 * Test to verify if firestationIds contains a firestationId
 	 */
 	@Test
-	public void TestToVerifyIfFirestationIdsContainsFirestationId() {
+	void TestToVerifyIfFirestationIdsContainsFirestationId() {
 		
 		//GIVEN
 		Address address = creationNewAddress();
-		int firestationId = 2;
+		Integer firestationId = 2;
 		List<Integer>addToTheList = new ArrayList<Integer>();
 		addToTheList.add(1);
 		addToTheList.add(firestationId);
@@ -122,14 +123,14 @@ public class AddressTest {
 		address.containsFirestationId(firestationId);
 
 		//THEN
-		assert(address.getFireStationIds().contains(2));
+		Assert.assertTrue(address.getFireStationIds().contains(firestationId));
 	}
 
 	/**
 	 * Test to verify if FirestationIds is equals to a firestationId
 	 */
 	@Test
-	public void TestToVerifyIfFirestationIdsEqualsFirestationId() {
+	void TestToVerifyIfFirestationIdsEqualsFirestationId() {
 
 		//GIVEN
 				Address address = creationNewAddress();
@@ -143,6 +144,6 @@ public class AddressTest {
 				address.equalsFirestationId(addToTheList);
 
 				//THEN
-				assert(address.getFireStationIds().equals(addToTheList));
+				Assert.assertEquals(address.getFireStationIds(), addToTheList);
 	}
 }

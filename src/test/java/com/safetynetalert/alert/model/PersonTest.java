@@ -1,12 +1,11 @@
 package com.safetyNetAlert.Alert.model;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 import com.safetynetalert.alert.model.Person;
 
-public class PersonTest {
-
-	Person person = new Person(); 
+class PersonTest {
 	
 	/**
 	 * Create a new person for test
@@ -28,15 +27,15 @@ public class PersonTest {
 	 * Test to verify Age Calculation method
 	 */
 	@Test
-	public void TestToVerifyTheAgeCalculationMethod() {
-		//TODO Method to complete
+	void TestToVerifyTheAgeCalculationMethod() {
+		Long expectedAge = (long) 5;
 		//GIVEN
-		Person erwan = creationANewPerson();
+		Person person = creationANewPerson();
 		
 		//WHEN
-		Long age = erwan.ageCalculation();
+		Long age = person.ageCalculation();
 		
 		//THEN
-		assert(age.compareTo((long) 5)==0);
+		Assert.assertEquals(age,expectedAge);
 	}
 }
